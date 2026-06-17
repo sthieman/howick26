@@ -41,6 +41,12 @@ export type TeamMember = {
   created_at: string;
 };
 
+export type SiteSettings = {
+  id: number;
+  team_photo: string | null; // public Storage URL for the home hero
+  updated_at: string;
+};
+
 /** Aggregate like count for a post (from the `post_like_counts` view). */
 export type PostLikeCount = {
   post_id: string;

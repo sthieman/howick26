@@ -221,6 +221,35 @@ from (values
 where not exists (select 1 from public.team_members);
 
 -- ----------------------------------------------------------------------------
+-- Site settings (single row) — small bits of site-wide config the team owns,
+-- like the whole-team hero photo on the home page.
+-- ----------------------------------------------------------------------------
+create table if not exists public.site_settings (
+  id          smallint primary key default 1 check (id = 1),
+  team_photo  text,                 -- public Storage URL for the home hero
+  updated_at  timestamptz not null default now()
+);
+
+insert into public.site_settings (id) values (1) on conflict (id) do nothing;
+
+alter table public.site_settings enable row level security;
+
+drop policy if exists "settings public read" on public.site_settings;
+create policy "settings public read"
+  on public.site_settings for select
+  using (true);
+
+drop policy if exists "settings team upsert" on public.site_settings;
+create policy "settings team upsert"
+  on public.site_settings for insert to authenticated
+  with check (true);
+
+drop policy if exists "settings team update" on public.site_settings;
+create policy "settings team update"
+  on public.site_settings for update to authenticated
+  using (true) with check (true);
+
+-- ----------------------------------------------------------------------------
 -- updated_at trigger for posts
 -- ----------------------------------------------------------------------------
 create or replace function public.set_updated_at()

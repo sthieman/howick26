@@ -29,7 +29,7 @@ function keyFor(folder: string, file: File): string {
  */
 export async function uploadImage(
   file: File,
-  folder: "gallery" | "covers" | "team" | "inline"
+  folder: "gallery" | "covers" | "team" | "inline" | "hero"
 ): Promise<{ path: string; url: string }> {
   const supabase = createClient();
   const path = keyFor(folder, file);

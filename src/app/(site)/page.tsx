@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { trip, focusAreas, teamFallback } from "@/content/trip";
 import { getTeamMembers } from "@/lib/data/team";
 import { getPublishedPosts } from "@/lib/data/posts";
+import { getSiteSettings } from "@/lib/data/settings";
 import { formatDate, readingMinutes, excerptOf, cardBackground } from "@/lib/format";
 import { JourneyController } from "@/components/JourneyController";
 import { CrossDivider } from "@/components/CrossDivider";
@@ -24,7 +25,12 @@ const btnSolid: CSSProperties = { display: "inline-flex", alignItems: "center", 
 const btnGhostWhite: CSSProperties = { display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 32px", fontFamily: "var(--font-heading)", fontSize: 14, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", border: "2px solid #fff", background: "transparent", color: "#fff", textDecoration: "none" };
 
 export default async function HomePage() {
-  const [teamRows, posts] = await Promise.all([getTeamMembers(), getPublishedPosts()]);
+  const [teamRows, posts, settings] = await Promise.all([
+    getTeamMembers(),
+    getPublishedPosts(),
+    getSiteSettings(),
+  ]);
+  const teamPhoto = settings?.team_photo ?? null;
   const team = teamRows.length
     ? teamRows.map((m) => ({ name: m.name, photo: m.photo }))
     : teamFallback.map((name) => ({ name, photo: null as string | null }));
@@ -69,7 +75,11 @@ export default async function HomePage() {
 
           {/* Team photo reveal scene */}
           <div data-scene="teamphoto" style={{ position: "absolute", inset: 0, overflow: "hidden", opacity: 0, pointerEvents: "none", willChange: "opacity,transform" }}>
-            <div id="jTeamImg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", background: "radial-gradient(circle at 50% 40%,#2a2422,#0c0b0a 78%)" }} />
+            {teamPhoto ? (
+              <img id="jTeamImg" src={teamPhoto} alt="The Howick 2026 team" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", willChange: "transform" }} />
+            ) : (
+              <div id="jTeamImg" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", background: "radial-gradient(circle at 50% 40%,#2a2422,#0c0b0a 78%)" }} />
+            )}
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(15,14,13,.12) 0%,transparent 30%,transparent 50%,rgba(15,14,13,.85) 100%)", pointerEvents: "none" }} />
             <div id="jTeamCap" style={{ position: "absolute", left: 0, right: 0, bottom: 0, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "0 24px 64px", opacity: 0, pointerEvents: "none" }}>
               <div style={{ fontFamily: "var(--font-heading)", fontSize: 12, fontWeight: 700, letterSpacing: ".3em", textTransform: "uppercase", color: "var(--brand-tint)", marginBottom: 16 }}>The Ones Being Sent</div>
