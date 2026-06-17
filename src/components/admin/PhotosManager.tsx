@@ -69,7 +69,7 @@ export function PhotosManager({ photos: initial }: { photos: GalleryItem[] }) {
         </label>
       </div>
 
-      <div style={{ background: "#fff", border: "1px solid var(--line)" }}>
+      <div className="table-scroll" style={{ background: "#fff", border: "1px solid var(--line)" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ background: "var(--paper-soft)", textAlign: "left" }}>

@@ -31,7 +31,7 @@ export function PostsTable({ posts: initial }: { posts: Post[] }) {
   }
 
   return (
-    <div style={{ background: "#fff", border: "1px solid var(--line)" }}>
+    <div className="table-scroll" style={{ background: "#fff", border: "1px solid var(--line)" }}>
       <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-body)" }}>
         <thead>
           <tr style={{ background: "var(--paper-soft)", textAlign: "left" }}>

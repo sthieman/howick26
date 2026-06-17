@@ -97,7 +97,7 @@ export default async function HomePage() {
       <section style={{ maxWidth: 1152, margin: "0 auto", padding: "clamp(64px,8vw,112px) 24px", textAlign: "center" }}>
         <div style={{ ...eyebrow, marginBottom: 12 }}>The eight</div>
         <h2 style={{ ...h2Display, margin: "0 0 40px" }}>Meet the team</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: "30px 20px", maxWidth: 740, margin: "0 auto" }}>
+        <div className="team-grid" style={{ display: "grid", gap: "30px 20px", maxWidth: 740, margin: "0 auto" }}>
           {team.map((m, i) => (
             <div key={i}>
               <div style={{ width: "clamp(78px,13vw,116px)", aspectRatio: "1", margin: "0 auto", borderRadius: "50%", overflow: "hidden", background: "var(--paper-soft)", border: "1px solid var(--line)" }}>

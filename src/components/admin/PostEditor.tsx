@@ -143,7 +143,7 @@ export function PostEditor({
         <label className="ad-lab">Post title</label>
         <input className="ad-in" placeholder="Give this update a headline" style={{ fontFamily: "var(--font-heading)", fontSize: 22, fontWeight: 700, padding: 13, marginBottom: 20 }} value={title} onChange={(e) => setTitle(e.target.value)} />
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: 14, marginBottom: 22 }}>
+        <div className="editor-grid" style={{ display: "grid", gap: 14, marginBottom: 22 }}>
           <div>
             <label className="ad-lab">Author</label>
             <select className="ad-in" value={author} onChange={(e) => setAuthor(e.target.value)}>

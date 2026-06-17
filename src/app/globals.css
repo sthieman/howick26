@@ -180,6 +180,56 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 900px) { .focus-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .focus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
+/* ==========================================================================
+ * Responsive / mobile. The desktop layout is ported faithfully from the
+ * prototype (built at 1280px); these rules adapt it down to phones.
+ * ========================================================================== */
+@media (max-width: 768px) { html { overflow-x: clip; } }
+
+/* Header: inline nav on desktop, hamburger + dropdown on mobile */
+.nav-desktop { display: flex; }
+.nav-mobile-toggle { display: none; }
+@media (max-width: 720px) {
+  .nav-desktop { display: none; }
+  .nav-mobile-toggle { display: inline-flex; }
+}
+@media (min-width: 721px) { .nav-mobile-panel { display: none !important; } }
+
+/* Home "Meet the team" circles: 4 across, 2 on phones */
+.team-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 560px) { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Admin dashboard stat cards + editor field row stack on small screens */
+.stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.editor-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 680px) {
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .editor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Wide admin tables scroll horizontally instead of breaking the layout */
+.table-scroll { overflow-x: auto; }
+.table-scroll table { min-width: 640px; }
+
+/* Admin shell: sidebar column on desktop, top bar on mobile */
+@media (max-width: 768px) {
+  .admin-shell { flex-direction: column; }
+  .admin-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    position: static !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    overflow-x: auto;
+    gap: 4px;
+    padding: 8px 12px !important;
+  }
+  .admin-sidebar .admin-brand { border-bottom: none !important; padding: 0 8px 0 4px !important; flex: none; }
+  .admin-nav { flex-direction: row !important; padding: 0 !important; flex: 1 1 auto !important; }
+  .admin-foot { border-top: none !important; flex-direction: row !important; padding: 0 4px !important; gap: 14px !important; flex: none; white-space: nowrap; }
+  .admin-nav .ad-navx { padding: 8px 12px !important; white-space: nowrap; }
+}
+
 /* Respect reduced-motion: drop all the scene/entrance motion, keep content visible */
 @media (prefers-reduced-motion: reduce) {
   [data-reveal], .how-rise, .how-fade { animation: none !important; opacity: 1 !important; transform: none !important; }

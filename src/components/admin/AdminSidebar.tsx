@@ -27,6 +27,7 @@ export function AdminSidebar() {
 
   return (
     <aside
+      className="admin-sidebar"
       style={{
         width: 248,
         flex: "none",
@@ -39,12 +40,12 @@ export function AdminSidebar() {
         height: "100vh",
       }}
     >
-      <div style={{ padding: "22px 20px", borderBottom: "1px solid rgba(255,255,255,.1)", display: "flex", alignItems: "center", gap: 9, color: "var(--brand-tint)" }}>
+      <div className="admin-brand" style={{ padding: "22px 20px", borderBottom: "1px solid rgba(255,255,255,.1)", display: "flex", alignItems: "center", gap: 9, color: "var(--brand-tint)" }}>
         <BraveLogo height={20} />
         <span style={{ fontFamily: "var(--font-heading)", fontSize: 10, fontWeight: 700, letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(255,255,255,.45)" }}>Admin</span>
       </div>
 
-      <nav style={{ padding: "14px 12px", display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+      <nav className="admin-nav" style={{ padding: "14px 12px", display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
         {NAV.map((n) => {
           const active = n.exact ? pathname === n.href : pathname.startsWith(n.href);
           return (
@@ -65,7 +66,7 @@ export function AdminSidebar() {
         })}
       </nav>
 
-      <div style={{ padding: 16, borderTop: "1px solid rgba(255,255,255,.1)", display: "flex", flexDirection: "column", gap: 10 }}>
+      <div className="admin-foot" style={{ padding: 16, borderTop: "1px solid rgba(255,255,255,.1)", display: "flex", flexDirection: "column", gap: 10 }}>
         <a href="/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-heading)", fontSize: 12, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", color: "rgba(255,255,255,.7)", textDecoration: "none" }}>↗ View live site</a>
         <button onClick={signOut} style={{ fontFamily: "var(--font-heading)", fontSize: 12, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", color: "rgba(255,255,255,.5)", cursor: "pointer", background: "none", border: "none", padding: 0, textAlign: "left" }}>Sign out</button>
       </div>

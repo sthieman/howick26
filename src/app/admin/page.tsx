@@ -27,7 +27,7 @@ export default async function AdminDashboard() {
     <>
       <AdminHeader title="Dashboard" />
       <div style={{ padding: 32, flex: 1 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: 18, marginBottom: 28 }}>
+        <div className="stat-grid" style={{ display: "grid", gap: 18, marginBottom: 28 }}>
           {stats.map((s) => (
             <div key={s.label} style={statCard}>
               <div style={statValue}>{s.value}</div>
