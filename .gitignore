@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design-sync (claude.ai/design) — build output + staged converter.
+# The reproducible source (design-sync.config.json, .design-sync-src/) IS committed;
+# these are regenerated each run from the skill, so they stay local.
+/ds-bundle
+/.design-sync
+/lib
+/package-build.mjs
+/package-validate.mjs
