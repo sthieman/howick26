@@ -70,7 +70,27 @@ export function JourneyController() {
         setSc(p, "title", 0, 0.5, { first: true });
         const tp = setSc(p, "teamphoto", 0.5, 1, { last: true, noscale: true });
         const tpi = q("#jTeamImg");
-        if (tpi) tpi.style.transform = reduce ? "none" : "scale(" + lerp(1.14, 1, ease(tp)) + ")";
+        if (tpi) {
+          const narrow = window.innerWidth < 768;
+          if (narrow && reduce) {
+            // Reduced-motion phone: show the whole landscape photo statically,
+            // no crop, so the full team is visible without any motion.
+            tpi.style.objectFit = "contain";
+            tpi.style.objectPosition = "center";
+            tpi.style.transform = "none";
+          } else if (narrow) {
+            // Phone: keep it full-bleed but pan left→right across the whole photo
+            // as the scene reveals, so every face is shown over the scroll.
+            tpi.style.objectFit = "cover";
+            tpi.style.transform = "none";
+            tpi.style.objectPosition = (ease(tp) * 100).toFixed(1) + "% center";
+          } else {
+            // Desktop: original subtle zoom-out.
+            tpi.style.objectFit = "cover";
+            tpi.style.objectPosition = "center";
+            tpi.style.transform = reduce ? "none" : "scale(" + lerp(1.14, 1, ease(tp)) + ")";
+          }
+        }
         const tpc = q("#jTeamCap");
         if (tpc) tpc.style.opacity = String(ease(clamp((tp - 0.2) / 0.5, 0, 1)));
         const hint = q("[data-scrollhint]");

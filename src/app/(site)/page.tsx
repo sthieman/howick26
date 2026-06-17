@@ -146,7 +146,7 @@ export default async function HomePage() {
           </div>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--gray-600)", maxWidth: "40ch", margin: 0 }}>Five ways we&rsquo;ll serve alongside the local church in Howick: building, creating, sharing the Gospel, and pouring into the next generation.</p>
         </div>
-        <div className="focus-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5,minmax(0,1fr))", gap: 16 }}>
+        <div className="focus-grid" style={{ display: "grid", gap: 16 }}>
           {focusAreas.map((area) => (
             <div key={area.num} data-reveal className="focus-card" style={{ border: "1px solid var(--line)", padding: "28px 20px", background: "var(--paper)", minHeight: 340, display: "flex", flexDirection: "column" }}>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 38, fontWeight: 700, color: "var(--brand-tint)", lineHeight: 1 }}>{area.num}</div>
