@@ -36,6 +36,18 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   return data;
 }
 
+/** A single post by id incl. drafts — for the admin editor (auth via RLS). */
+export async function getPostByIdForAdmin(id: string): Promise<Post | null> {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("posts").select("*").eq("id", id).maybeSingle();
+  if (error) {
+    console.error("getPostByIdForAdmin:", error.message);
+    return null;
+  }
+  return data;
+}
+
 /** All posts incl. drafts — for the team admin list (requires auth via RLS). */
 export async function getAllPostsForAdmin(): Promise<Post[]> {
   if (!isSupabaseConfigured()) return [];

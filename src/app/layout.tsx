@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Oswald, Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { trip } from "@/content/trip";
 
 // Brand type stack (free Google equivalents of Brave's Draught / Montserrat / proxima-nova).
@@ -40,12 +38,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${oswald.variable} ${montserrat.variable} ${openSans.variable} h-full antialiased`}
+      className={`${oswald.variable} ${montserrat.variable} ${openSans.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-paper text-ink">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+      {/* No marketing chrome here — the (site) route group adds the header/footer.
+          /admin and /login render their own full-screen layouts. */}
+      <body style={{ background: "var(--paper)", color: "var(--ink)", overflowX: "clip" }}>
+        {children}
       </body>
     </html>
   );
