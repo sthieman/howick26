@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/mission-trip-blog-site-f5e646bc-2c0d-4188-8f16-f92f01b42112/tokens/brave-tokens.css">
+  <link rel="stylesheet" href="_ds/mission-trip-blog-site-f5e646bc-2c0d-4188-8f16-f92f01b42112/styles.css">
+  <script src="image-slot.js"></script>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    ::selection{background:var(--brand);color:#fff}
+    image-slot{display:block}
+
+    @keyframes howRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    @keyframes howFade{from{opacity:0}to{opacity:1}}
+    .how-rise{animation:howRise .7s cubic-bezier(.2,.7,.2,1) both}
+    .how-fade{animation:howFade .5s ease both}
+
+    @keyframes revealUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+    [data-reveal]{animation:revealUp both;animation-timeline:view();animation-range:entry 0% cover 24%}
+
+    @keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    [data-progress]{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--brand);transform-origin:0 50%;transform:scaleX(0);z-index:60;animation:growX both;animation-timeline:scroll(root)}
+
+    .navlink{position:relative}
+    .navlink::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;background:var(--brand);transform:scaleX(0);transform-origin:left;transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+    .navlink:hover::after{transform:scaleX(1)}
+    .navlink[data-active="true"]::after{transform:scaleX(1)}
+
+    @keyframes emGeo{0%{opacity:0}6%{opacity:1}45%{opacity:1}54%{opacity:0}100%{opacity:0}}
+    @keyframes emCross{0%{opacity:0}49%{opacity:0}59%{opacity:1}92%{opacity:1}99%{opacity:0}100%{opacity:0}}
+    @keyframes emFlow{to{stroke-dashoffset:-26}}
+    @keyframes emTravel{0%{offset-distance:0%;opacity:0}10%{opacity:1}38%{offset-distance:100%;opacity:1}44%{offset-distance:100%;opacity:0}100%{offset-distance:100%;opacity:0}}
+    @keyframes emDraw{0%{stroke-dashoffset:var(--len)}54%{stroke-dashoffset:var(--len)}64%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+    @keyframes emGlow{0%,55%{opacity:0}68%{opacity:.95}80%{opacity:.5}92%{opacity:.7}99%{opacity:0}}
+
+    @keyframes crossWipe{0%{clip-path:inset(0 100% 0 0)}44%{clip-path:inset(0 0 0 0)}56%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 100%)}}
+    @keyframes toDraw{0%,28%{stroke-dashoffset:var(--len)}70%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+    @keyframes toRing{0%{stroke-dashoffset:var(--len);opacity:0}25%{opacity:1}65%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:.85}}
+    @keyframes toGlow{0%,38%{opacity:0}72%{opacity:.9}100%{opacity:.6}}
+
+    @keyframes braveOn{0%{color:rgba(255,255,255,.5)}4%{color:var(--brand)}16%{color:var(--brand)}20%{color:rgba(255,255,255,.5)}100%{color:rgba(255,255,255,.5)}}
+    @keyframes bravePhrase{0%{opacity:0;transform:translateY(10px)}4%{opacity:1;transform:none}16%{opacity:1;transform:none}20%{opacity:0;transform:translateY(-10px)}100%{opacity:0;transform:translateY(10px)}}
+    .bl{display:inline-flex;align-items:center;color:rgba(255,255,255,.5);animation:braveOn 10s infinite}
+    .bp{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;font-family:var(--font-heading);font-size:clamp(12px,1.6vw,16px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff;animation:bravePhrase 10s infinite}
+    @keyframes xdraw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+
+    @media (prefers-reduced-motion: reduce){
+      [data-reveal],.how-rise,.how-fade{animation:none!important;opacity:1!important;transform:none!important}
+      .emblem *{animation:none!important}
+      .bl{animation:none!important;color:rgba(255,255,255,.8)!important}
+      .bp{animation:none!important}
+      .bp:first-child{opacity:1!important}
+      .xcross *{animation:none!important}
+      [data-progress]{display:none}
+    }
+  </style>
+</helmet>
+<div style="font-family:var(--font-body);color:var(--ink);background:var(--paper);min-height:100vh;overflow-x:clip">
+
+  <div data-progress></div>
+
+  <header style="position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)">
+    <div style="max-width:1152px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <a href="https://brave.org" target="_blank" rel="noopener" aria-label="Brave Church — brave.org" style="display:flex;align-items:center;gap:3px;color:var(--brand);line-height:0;transition:color .2s" style-hover="color:var(--brand-shade)">
+          <svg viewBox="0 0 146 91" style="height:20px;width:auto;display:block"><path d="M51.02 54.22H108.47V67.25H51.02V54.22ZM51.02 23.59H108.47V36.62H51.02V23.59ZM0 0L14.03 14.66V90.84H133.41L145.45 78.26V58.15L145.49 58.13L133.3 45.4L145.46 32.69V12.71L133.29 0.02L133.31 0H0Z" fill="currentColor"></path></svg>
+          <svg viewBox="0 0 147 91" style="height:20px;width:auto;display:block"><path d="M51.03 23.59H108.48V45.42H51.03V23.59ZM0 0L14.03 14.66V90.84H51.03V48.97L101.87 90.84H146.07L118.21 67.87L145.47 45.41V12.7L133.31 0.02L133.33 0H0Z" fill="currentColor"></path></svg>
+          <svg viewBox="0 0 145 91" style="height:20px;width:auto;display:block"><path d="M49.89 58.14L63.53 23.59H80.56L94.2 58.17L49.89 58.15V58.14ZM19.69 0L31.13 11.95L0 90.84H36.99L49.23 59.82L86.9 90.84H144.08L108.24 0H19.69Z" fill="currentColor"></path></svg>
+          <svg viewBox="0 0 145 91" style="height:20px;width:auto;display:block"><path d="M90.71 0L102.3 12.11L80.55 67.25H63.52L36.99 0H0L35.83 90.84H108.23L144.07 0H90.71Z" fill="currentColor"></path></svg>
+          <svg viewBox="0 0 146 91" style="height:20px;width:auto;display:block"><path d="M0 0L14.03 14.66V90.84H145.46V54.22H108.47V67.25H51.02V54.22H97.33V36.62H51.02V23.59H108.47V36.62H145.46V0H0Z" fill="currentColor"></path></svg>
+        </a>
+        <span onClick="{{ goHome }}" style="font-family:var(--font-heading);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--mute);cursor:pointer">Howick 2026</span>
+      </div>
+      <nav style="display:flex;align-items:center;gap:28px">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+          <span onClick="{{ item.onClick }}" class="navlink" data-active="{{ item.active }}" style="font-family:var(--font-heading);font-size:13.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:{{ item.color }}">{{ item.label }}</span>
+        </sc-for>
+        <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;padding:10px 20px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;text-decoration:none;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Give</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== HOME ===================== -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+
+      <!-- Hero: Cinematic (Editorial), Title + Team photo reveal -->
+      <sc-if value="{{ isEditorial }}" hint-placeholder-val="{{ true }}">
+      <section data-journey="intro" style="position:relative;height:340vh;background:var(--ink-deep)">
+        <div data-stage style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 32%,#211e1d,#0c0b0a 72%)">
+
+          <!-- Title -->
+          <div data-scene="title" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:1;pointer-events:auto;will-change:opacity,transform">
+            <div style="position:absolute;left:50%;bottom:5%;transform:translateX(-50%);width:160%;height:64%;background:radial-gradient(ellipse at 50% 100%,rgba(170,31,35,.30),transparent 62%);pointer-events:none"></div>
+            <svg viewBox="0 0 1440 300" width="100%" height="100%" preserveAspectRatio="xMidYMin slice" style="position:absolute;top:6%;left:0;opacity:.55"><g>
+              <circle cx="180" cy="60" r="1.6" style="fill:#fff"></circle><circle cx="420" cy="40" r="1.2" style="fill:#fff"></circle><circle cx="700" cy="80" r="1.8" style="fill:#fff"></circle><circle cx="980" cy="50" r="1.2" style="fill:#fff"></circle><circle cx="1240" cy="70" r="1.6" style="fill:#fff"></circle><circle cx="1120" cy="30" r="1" style="fill:#fff"></circle><circle cx="560" cy="110" r="1" style="fill:#fff"></circle><circle cx="320" cy="150" r="1" style="fill:#fff"></circle><circle cx="860" cy="36" r="1.3" style="fill:#fff"></circle>
+            </g></svg>
+            <div id="jMountains" style="position:absolute;left:0;right:0;bottom:0;height:54%;will-change:transform">
+              <svg viewBox="0 0 1440 400" preserveAspectRatio="none" width="100%" height="100%" style="display:block">
+                <polygon points="0,400 0,235 200,120 380,250 560,150 760,40 980,200 1180,110 1440,210 1440,400" style="fill:#121110"></polygon>
+                <polygon points="0,400 0,210 180,128 360,242 540,96 760,250 980,128 1180,262 1440,150 1440,400" style="fill:#1b1918"></polygon>
+                <polygon points="0,400 0,300 220,210 470,300 720,190 980,300 1240,220 1440,300 1440,400" style="fill:#262220"></polygon>
+              </svg>
+            </div>
+            <div style="position:relative;z-index:2;max-width:920px">
+              <div style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:20px">Brave Church · {{ trip.dates }}</div>
+              <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(48px,8.5vw,116px);color:#fff;margin:0">Howick 2026</h2>
+              <div style="font-family:var(--font-heading);font-size:clamp(13px,1.7vw,17px);font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--brand-tint);margin-top:14px">Sent to Serve</div>
+              <p style="font-family:var(--font-body);font-size:clamp(16px,2vw,20px);line-height:1.6;color:rgba(255,255,255,.78);margin:22px auto 0;max-width:50ch">A mission team from Brave Church, sent to {{ trip.location }}. Follow the story, and walk with us.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:32px">
+                <button onClick="{{ goBlog }}" style="display:inline-flex;align-items:center;gap:8px;padding:15px 32px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Read the Blog</button>
+                <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:15px 32px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid #fff;background:transparent;color:#fff;text-decoration:none;transition:all .2s" style-hover="background:#fff;color:var(--ink)">Support the team</a>
+              </div>
+              <div style="margin-top:38px">
+                <div style="display:flex;gap:clamp(8px,1.8vw,18px);justify-content:center;align-items:center">
+                  <span class="bl" style="animation-delay:0s"><svg viewBox="0 0 146 91" style="height:clamp(26px,5vw,50px);width:auto;display:block"><path d="M51.02 54.22H108.47V67.25H51.02V54.22ZM51.02 23.59H108.47V36.62H51.02V23.59ZM0 0L14.03 14.66V90.84H133.41L145.45 78.26V58.15L145.49 58.13L133.3 45.4L145.46 32.69V12.71L133.29 0.02L133.31 0H0Z" fill="currentColor"></path></svg></span>
+                  <span class="bl" style="animation-delay:2s"><svg viewBox="0 0 147 91" style="height:clamp(26px,5vw,50px);width:auto;display:block"><path d="M51.03 23.59H108.48V45.42H51.03V23.59ZM0 0L14.03 14.66V90.84H51.03V48.97L101.87 90.84H146.07L118.21 67.87L145.47 45.41V12.7L133.31 0.02L133.33 0H0Z" fill="currentColor"></path></svg></span>
+                  <span class="bl" style="animation-delay:4s"><svg viewBox="0 0 145 91" style="height:clamp(26px,5vw,50px);width:auto;display:block"><path d="M49.89 58.14L63.53 23.59H80.56L94.2 58.17L49.89 58.15V58.14ZM19.69 0L31.13 11.95L0 90.84H36.99L49.23 59.82L86.9 90.84H144.08L108.24 0H19.69Z" fill="currentColor"></path></svg></span>
+                  <span class="bl" style="animation-delay:6s"><svg viewBox="0 0 145 91" style="height:clamp(26px,5vw,50px);width:auto;display:block"><path d="M90.71 0L102.3 12.11L80.55 67.25H63.52L36.99 0H0L35.83 90.84H108.23L144.07 0H90.71Z" fill="currentColor"></path></svg></span>
+                  <span class="bl" style="animation-delay:8s"><svg viewBox="0 0 146 91" style="height:clamp(26px,5vw,50px);width:auto;display:block"><path d="M0 0L14.03 14.66V90.84H145.46V54.22H108.47V67.25H51.02V54.22H97.33V36.62H51.02V23.59H108.47V36.62H145.46V0H0Z" fill="currentColor"></path></svg></span>
+                </div>
+                <div style="position:relative;height:1.7em;margin-top:12px">
+                  <div class="bp" style="animation-delay:0s">Bold in faith</div>
+                  <div class="bp" style="animation-delay:2s">Resolute in identity</div>
+                  <div class="bp" style="animation-delay:4s">Authentic in relationships</div>
+                  <div class="bp" style="animation-delay:6s">Virtuous in character</div>
+                  <div class="bp" style="animation-delay:8s">Engaged in mission</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team photo reveal -->
+          <div data-scene="teamphoto" style="position:absolute;inset:0;overflow:hidden;opacity:0;pointer-events:none;will-change:opacity,transform">
+            <image-slot id="jTeamImg" shape="rect" fit="cover" placeholder="Drop a photo of the whole team" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,14,13,.12) 0%,transparent 30%,transparent 50%,rgba(15,14,13,.85) 100%);pointer-events:none"></div>
+            <div id="jTeamCap" style="position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 24px 64px;opacity:0;pointer-events:none">
+              <div style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:16px">The Ones Being Sent</div>
+              <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.9;letter-spacing:-.01em;font-size:clamp(44px,8vw,108px);color:#fff;margin:0">Meet the team</h2>
+            </div>
+          </div>
+
+          <div data-scrollhint style="position:absolute;left:0;right:0;bottom:26px;text-align:center;font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);pointer-events:none">Scroll ↓</div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- Hero B: Split -->
+      <sc-if value="{{ isSplit }}" hint-placeholder-val="{{ true }}">
+      <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));min-height:84vh;background:var(--paper)">
+        <div class="how-rise" style="display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,96px);border-right:1px solid var(--line)">
+          <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--brand);margin-bottom:20px">Brave Church · Mission Trip 2026</div>
+          <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.9;letter-spacing:-.01em;color:var(--ink);font-size:clamp(48px,6.5vw,104px);margin:0">Howick<br>South Africa</h1>
+          <p style="font-family:var(--font-body);font-size:19px;line-height:1.65;color:var(--gray-700);max-width:46ch;margin:26px 0 0">{{ trip.tagline }}</p>
+          <div style="display:inline-flex;align-items:center;gap:14px;margin-top:30px;padding:14px 20px;background:var(--paper-soft);border-left:4px solid var(--brand);width:fit-content">
+            <span style="font-family:var(--font-display);font-size:34px;font-weight:700;color:var(--brand);line-height:1">{{ countdown }}</span>
+            <span style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);line-height:1.3">Days until<br>departure</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:32px">
+            <button onClick="{{ goBlog }}" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Read the Blog</button>
+            <button onClick="{{ goGive }}" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:transparent;color:var(--brand);cursor:pointer;transition:all .2s" style-hover="background:var(--brand);color:#fff">How to give</button>
+          </div>
+        </div>
+        <div style="position:relative;min-height:380px;background:var(--ink-deep)">
+          <image-slot id="hero-split" shape="rect" fit="cover" placeholder="Drop a vertical hero photo" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+          <div style="position:absolute;left:0;bottom:0;background:var(--brand);color:#fff;padding:16px 22px;font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">{{ trip.dates }}</div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- Hero C: Journey -->
+      <sc-if value="{{ isJourney }}" hint-placeholder-val="{{ true }}">
+      <section style="position:relative;background:var(--ink-deep);color:#fff;overflow:hidden;padding:clamp(56px,8vw,120px) 0">
+        <div style="position:absolute;top:0;left:0;width:8px;height:100%;background:var(--brand)"></div>
+        <div class="how-rise" style="max-width:1152px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,5vw,72px);align-items:center">
+          <div>
+            <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:18px">The Journey Begins</div>
+            <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.88;letter-spacing:-.01em;font-size:clamp(52px,8vw,116px);margin:0">Howick<br><span style="color:var(--brand-tint)">2026</span></h1>
+            <p style="font-family:var(--font-body);font-size:18px;line-height:1.65;color:rgba(255,255,255,.82);max-width:46ch;margin:24px 0 0">{{ trip.tagline }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px">
+              <button onClick="{{ goBlog }}" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Read the Blog</button>
+              <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid #fff;background:transparent;color:#fff;text-decoration:none;transition:all .2s" style-hover="background:#fff;color:var(--ink)">Support the team</a>
+            </div>
+          </div>
+          <div style="position:relative">
+            <div style="position:absolute;transform:rotate(-3deg);inset:0;border:2px solid var(--brand);transform-origin:center"></div>
+            <image-slot id="hero-journey" shape="rect" fit="cover" placeholder="Drop a photo of the team" style="position:relative;width:100%;aspect-ratio:4/5;transform:rotate(2deg)"></image-slot>
+          </div>
+        </div>
+      </section>
+      </sc-if>
+
+      <div style="max-width:1152px;margin:0 auto;padding:6px 24px;display:flex;align-items:center;gap:22px">
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+        <svg class="xcross" viewBox="0 0 40 56" width="24" height="34" style="overflow:visible;flex:none">
+          <line x1="20" y1="3" x2="20" y2="53" style="--len:50;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:50;animation:xdraw both;animation-timeline:view();animation-range:entry 0% cover 36%"></line>
+          <line x1="7" y1="20" x2="33" y2="20" style="--len:26;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:26;animation:xdraw both;animation-timeline:view();animation-range:entry 6% cover 40%"></line>
+        </svg>
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+      </div>
+
+      <!-- Meet the team -->
+      <section style="max-width:1152px;margin:0 auto;padding:clamp(64px,8vw,112px) 24px;text-align:center">
+        <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin-bottom:12px">The eight</div>
+        <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(34px,5vw,60px);margin:0 0 40px;color:var(--ink)">Meet the team</h2>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px 20px;max-width:740px;margin:0 auto">
+          <sc-for list="{{ team }}" as="member" hint-placeholder-count="8">
+            <div>
+              <image-slot id="{{ member.slotId }}" shape="circle" fit="cover" placeholder="Photo" style="width:clamp(78px,13vw,116px);aspect-ratio:1;margin:0 auto"></image-slot>
+              <div style="font-family:var(--font-heading);font-size:15px;font-weight:700;color:var(--ink);margin-top:14px;line-height:1.2">{{ member.name }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- The Call, Isaiah 6 (pinned) -->
+      <div style="max-width:1152px;margin:0 auto;padding:6px 24px;display:flex;align-items:center;gap:22px">
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+        <svg class="xcross" viewBox="0 0 40 56" width="24" height="34" style="overflow:visible;flex:none">
+          <line x1="20" y1="3" x2="20" y2="53" style="--len:50;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:50;animation:xdraw both;animation-timeline:view();animation-range:entry 0% cover 36%"></line>
+          <line x1="7" y1="20" x2="33" y2="20" style="--len:26;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:26;animation:xdraw both;animation-timeline:view();animation-range:entry 6% cover 40%"></line>
+        </svg>
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+      </div>
+
+      <section data-journey="isaiah" style="position:relative;height:320vh;background:var(--ink-deep)">
+        <div data-stage style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 32%,#211e1d,#0c0b0a 72%)">
+          <div data-scene="isaiah" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;pointer-events:none;will-change:opacity">
+            <div style="position:relative;max-width:920px;width:100%">
+              <div id="jIsa5" style="will-change:opacity,transform">
+                <div style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:30px">Isaiah 6</div>
+                <p style="font-family:var(--font-display);font-weight:500;text-transform:uppercase;line-height:1.1;letter-spacing:-.005em;font-size:clamp(24px,3.8vw,50px);color:rgba(255,255,255,.92);margin:0">“Woe is me! For I am undone, for my eyes have seen the King, the Lord of hosts.”</p>
+                <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:24px">Isaiah 6:5</div>
+              </div>
+              <div id="jIsa8" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;will-change:opacity,transform">
+                <p style="font-family:var(--font-body);font-size:clamp(15px,1.9vw,21px);color:rgba(255,255,255,.7);margin:0 0 18px;max-width:42ch">And I heard the voice of the Lord saying, “Whom shall I send, and who will go for us?” Then I said,</p>
+                <p style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.92;letter-spacing:-.01em;font-size:clamp(40px,7.5vw,104px);color:#fff;margin:0">Here am I.<br><span style="color:var(--brand)">Send me!</span></p>
+                <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:24px">Isaiah 6:8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div style="max-width:1152px;margin:0 auto;padding:6px 24px;display:flex;align-items:center;gap:22px">
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+        <svg class="xcross" viewBox="0 0 40 56" width="24" height="34" style="overflow:visible;flex:none">
+          <line x1="20" y1="3" x2="20" y2="53" style="--len:50;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:50;animation:xdraw both;animation-timeline:view();animation-range:entry 0% cover 36%"></line>
+          <line x1="7" y1="20" x2="33" y2="20" style="--len:26;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:26;animation:xdraw both;animation-timeline:view();animation-range:entry 6% cover 40%"></line>
+        </svg>
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+      </div>
+
+      <!-- The work in Howick -->
+      <section style="max-width:1152px;margin:0 auto;padding:clamp(64px,8vw,112px) 24px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:48px">
+          <div>
+            <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin-bottom:12px">What we're doing</div>
+            <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(34px,5vw,60px);margin:0;color:var(--ink)">The work in Howick</h2>
+          </div>
+          <p style="font-family:var(--font-body);font-size:17px;line-height:1.6;color:var(--gray-600);max-width:40ch;margin:0">Five ways we'll serve alongside the local church in Howick: building, creating, sharing the Gospel, and pouring into the next generation.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px">
+          <sc-for list="{{ focusAreas }}" as="area" hint-placeholder-count="5">
+            <div data-reveal style="border:1px solid var(--line);padding:28px 20px;background:var(--paper);min-height:340px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s" style-hover="border-color:var(--brand);transform:translateY(-4px)">
+              <div style="font-family:var(--font-display);font-size:38px;font-weight:700;color:var(--brand-tint);line-height:1">{{ area.num }}</div>
+              <h3 style="font-family:var(--font-heading);font-size:18px;font-weight:700;color:var(--ink);margin:20px 0 12px;line-height:1.2">{{ area.title }}</h3>
+              <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--gray-600);margin:0">{{ area.desc }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- The Great Commission, Matthew 28 (pinned) -->
+      <div style="max-width:1152px;margin:0 auto;padding:6px 24px;display:flex;align-items:center;gap:22px">
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+        <svg class="xcross" viewBox="0 0 40 56" width="24" height="34" style="overflow:visible;flex:none">
+          <line x1="20" y1="3" x2="20" y2="53" style="--len:50;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:50;animation:xdraw both;animation-timeline:view();animation-range:entry 0% cover 36%"></line>
+          <line x1="7" y1="20" x2="33" y2="20" style="--len:26;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:26;animation:xdraw both;animation-timeline:view();animation-range:entry 6% cover 40%"></line>
+        </svg>
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+      </div>
+
+      <section data-journey="commission" style="position:relative;height:300vh;background:var(--ink-deep)">
+        <div data-stage style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 32%,#211e1d,#0c0b0a 72%)">
+          <div data-scene="matthew" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;pointer-events:none;will-change:opacity">
+            <div style="position:relative;max-width:940px;width:100%">
+              <div style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:30px">The Great Commission</div>
+              <p style="font-family:var(--font-display);font-weight:500;text-transform:uppercase;line-height:1.08;letter-spacing:-.005em;font-size:clamp(22px,3.6vw,48px);color:rgba(255,255,255,.92);margin:0">“All authority in heaven and on earth has been given to me. Go therefore and make disciples of all nations.”</p>
+              <div id="jMattPromise" style="opacity:0;will-change:opacity,transform;margin-top:26px">
+                <p style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.96;letter-spacing:-.01em;font-size:clamp(30px,5.2vw,72px);color:#fff;margin:0">“And behold, <span style="color:var(--brand)">I am with you always</span>, to the end of the age.”</p>
+              </div>
+              <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:26px">Matthew 28:18–20</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Luke 10, how we are sent -->
+      <section style="position:relative;background:var(--ink-deep);color:#fff;overflow:hidden;padding:clamp(64px,9vw,128px) 0">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(170,31,35,.14),transparent 60%)"></div>
+        <div style="position:relative;max-width:880px;margin:0 auto;padding:0 24px;text-align:center">
+          <div data-reveal style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:28px">Luke 10:1–9 · How we go</div>
+          <p data-reveal style="font-family:var(--font-display);font-weight:500;text-transform:uppercase;line-height:1.1;letter-spacing:-.005em;font-size:clamp(24px,4vw,52px);color:#fff;margin:0">“He sent them two by two ahead of him, into every town where he himself was about to go.”</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;margin-top:48px;text-align:left">
+            <div data-reveal style="border-top:2px solid var(--brand);padding-top:20px">
+              <p style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:clamp(20px,2.6vw,30px);line-height:1.05;color:#fff;margin:0">“Carry no purse, no bag.”</p>
+              <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-tint);margin-top:12px">Sent in complete reliance on the Lord</div>
+            </div>
+            <div data-reveal style="border-top:2px solid var(--brand);padding-top:20px">
+              <p style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:clamp(20px,2.6vw,30px);line-height:1.05;color:#fff;margin:0">“Peace to this house.”</p>
+              <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-tint);margin-top:12px">Sent to love everyone we meet</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Denver to Howick journey (pinned) -->
+      <section data-journey="globe" style="position:relative;height:280vh;background:var(--ink-deep)">
+        <div data-stage style="position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 32%,#211e1d,#0c0b0a 72%)">
+          <div data-scene="globe" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;will-change:opacity">
+            <div style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:6px">Denver to Howick</div>
+            <div style="display:flex;align-items:baseline;gap:14px;justify-content:center">
+              <span id="jMiles" style="font-family:var(--font-display);font-weight:700;font-size:clamp(54px,11vw,148px);color:#fff;line-height:1">0</span>
+              <span style="font-family:var(--font-heading);font-size:clamp(14px,2vw,20px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6)">Miles</span>
+            </div>
+            <svg viewBox="0 0 400 400" width="min(72vw,420px)" height="min(72vw,420px)" style="overflow:visible;margin-top:4px">
+              <g id="jGlobeRot" style="transform-box:fill-box;transform-origin:center">
+                <circle cx="200" cy="200" r="150" style="fill:none;stroke:rgba(255,255,255,.22);stroke-width:1.5"></circle>
+                <ellipse cx="200" cy="200" rx="60" ry="150" style="fill:none;stroke:rgba(255,255,255,.12);stroke-width:1"></ellipse>
+                <ellipse cx="200" cy="200" rx="112" ry="150" style="fill:none;stroke:rgba(255,255,255,.1);stroke-width:1"></ellipse>
+                <line x1="50" y1="200" x2="350" y2="200" style="stroke:rgba(255,255,255,.14);stroke-width:1"></line>
+                <line x1="74" y1="135" x2="326" y2="135" style="stroke:rgba(255,255,255,.1);stroke-width:1"></line>
+                <line x1="74" y1="265" x2="326" y2="265" style="stroke:rgba(255,255,255,.1);stroke-width:1"></line>
+                <line x1="200" y1="50" x2="200" y2="350" style="stroke:rgba(255,255,255,.14);stroke-width:1"></line>
+              </g>
+              <path id="jArc" data-len="340" d="M118 150 Q210 50 290 250" style="fill:none;stroke:var(--brand-tint);stroke-width:2.5;stroke-dasharray:340;stroke-dashoffset:340"></path>
+              <circle cx="118" cy="150" r="5" style="fill:#fff"></circle>
+              <circle cx="290" cy="250" r="6.5" style="fill:var(--brand);stroke:#fff;stroke-width:1.5"></circle>
+              <circle id="jArcDot" cx="118" cy="150" r="4.5" style="fill:#fff;offset-path:path('M118 150 Q210 50 290 250');opacity:0"></circle>
+            </svg>
+            <p style="font-family:var(--font-body);font-size:clamp(15px,1.8vw,19px);color:rgba(255,255,255,.7);margin:8px 0 0">From the Rockies to the Midlands of KwaZulu-Natal.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mission has no borders -->
+      <section style="position:relative;background:var(--ink-deep);color:#fff;overflow:hidden;padding:clamp(72px,10vw,140px) 0">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(170,31,35,.18),transparent 62%)"></div>
+        <div style="position:relative;max-width:1100px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(36px,6vw,72px);align-items:center">
+          <div data-reveal>
+            <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:18px">Why we go</div>
+            <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.88;letter-spacing:-.01em;font-size:clamp(40px,6vw,84px);margin:0">The mission<br>has no<br>borders</h2>
+            <p style="font-family:var(--font-body);font-size:18px;line-height:1.7;color:rgba(255,255,255,.82);max-width:46ch;margin:24px 0 0">From Denver to a hillside in KwaZulu-Natal the distance is nine thousand miles. The Gospel crosses it without slowing down. Eight people, ten days, one church family stretched across an ocean, and one Cross at the center of it all.</p>
+            <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:30px;font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6)">
+              <span>9,800 Miles</span><span style="color:var(--brand)">✦</span><span>One Mission</span>
+            </div>
+          </div>
+          <div data-reveal style="display:flex;align-items:center;justify-content:center;min-height:340px">
+            <svg viewBox="0 0 400 400" width="100%" height="100%" class="emblem" style="max-width:360px;overflow:visible">
+              <g style="animation:emGeo 10s ease-in-out infinite">
+                <circle cx="200" cy="200" r="150" style="fill:none;stroke:rgba(255,255,255,.30);stroke-width:1.5"></circle>
+                <ellipse cx="200" cy="200" rx="60" ry="150" style="fill:none;stroke:rgba(255,255,255,.16);stroke-width:1"></ellipse>
+                <ellipse cx="200" cy="200" rx="112" ry="150" style="fill:none;stroke:rgba(255,255,255,.12);stroke-width:1"></ellipse>
+                <line x1="50" y1="200" x2="350" y2="200" style="stroke:rgba(255,255,255,.20);stroke-width:1"></line>
+                <line x1="74" y1="135" x2="326" y2="135" style="stroke:rgba(255,255,255,.13);stroke-width:1"></line>
+                <line x1="74" y1="265" x2="326" y2="265" style="stroke:rgba(255,255,255,.13);stroke-width:1"></line>
+                <line x1="200" y1="50" x2="200" y2="350" style="stroke:rgba(255,255,255,.20);stroke-width:1"></line>
+                <path d="M120 150 Q200 60 286 246" style="fill:none;stroke:var(--brand-tint);stroke-width:2.5;stroke-dasharray:6 7;animation:emFlow 1.1s linear infinite"></path>
+                <circle cx="120" cy="150" r="5" style="fill:#fff"></circle>
+                <circle cx="286" cy="246" r="6.5" style="fill:var(--brand);stroke:#fff;stroke-width:1.5"></circle>
+                <circle cx="120" cy="150" r="4.5" style="fill:#fff;offset-path:path('M120 150 Q200 60 286 246');animation:emTravel 10s ease-in-out infinite"></circle>
+              </g>
+              <g style="animation:emCross 10s ease-in-out infinite">
+                <g style="animation:emGlow 10s ease-in-out infinite">
+                  <line x1="200" y1="74" x2="200" y2="332" style="stroke:var(--brand);stroke-width:18;filter:blur(13px)"></line>
+                  <line x1="134" y1="152" x2="266" y2="152" style="stroke:var(--brand);stroke-width:18;filter:blur(13px)"></line>
+                </g>
+                <line x1="200" y1="74" x2="200" y2="332" style="--len:258;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-dasharray:258;animation:emDraw 10s ease infinite"></line>
+                <line x1="134" y1="152" x2="266" y2="152" style="--len:132;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-dasharray:132;animation:emDraw 10s ease infinite"></line>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <div style="max-width:1152px;margin:0 auto;padding:6px 24px;display:flex;align-items:center;gap:22px">
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+        <svg class="xcross" viewBox="0 0 40 56" width="24" height="34" style="overflow:visible;flex:none">
+          <line x1="20" y1="3" x2="20" y2="53" style="--len:50;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:50;animation:xdraw both;animation-timeline:view();animation-range:entry 0% cover 36%"></line>
+          <line x1="7" y1="20" x2="33" y2="20" style="--len:26;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-dasharray:26;animation:xdraw both;animation-timeline:view();animation-range:entry 6% cover 40%"></line>
+        </svg>
+        <div style="flex:1;height:1px;background:var(--line)"></div>
+      </div>
+
+      <!-- Latest updates -->
+      <section style="background:var(--paper-soft);padding:clamp(64px,8vw,112px) 0">
+        <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:48px">
+            <div>
+              <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin-bottom:12px">From the field</div>
+              <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(34px,5vw,60px);margin:0;color:var(--ink)">Latest updates</h2>
+            </div>
+            <button onClick="{{ goBlog }}" style="font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);background:none;border:none;cursor:pointer;padding:0">Visit the blog →</button>
+          </div>
+          <sc-if value="{{ hasPosts }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+            <sc-for list="{{ latestPosts }}" as="post" hint-placeholder-count="3">
+              <div onClick="{{ post.onClick }}" data-reveal style="background:var(--paper);border:1px solid var(--line);cursor:pointer;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(25,24,23,.1)">
+                <div style="aspect-ratio:16/10;background:{{ post.tone }};position:relative">
+                  <span style="position:absolute;top:14px;left:14px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(25,24,23,.4);padding:5px 10px;backdrop-filter:blur(4px)">{{ post.category }}</span>
+                </div>
+                <div style="padding:24px;display:flex;flex-direction:column;flex:1">
+                  <div style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">{{ post.date }} · {{ post.readMins }} min read</div>
+                  <h3 style="font-family:var(--font-heading);font-size:21px;font-weight:700;color:var(--ink);margin:12px 0 10px;line-height:1.25">{{ post.title }}</h3>
+                  <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:var(--gray-600);margin:0 0 18px">{{ post.excerpt }}</p>
+                  <div style="margin-top:auto;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--brand)">Read more →</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ noPosts }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1px dashed var(--line-strong);padding:clamp(40px,6vw,72px) 24px;text-align:center;background:var(--paper)">
+            <div style="font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;text-transform:uppercase;color:var(--ink);line-height:1">The journal opens in July</div>
+            <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--gray-600);margin:14px auto 0;max-width:46ch">Every update here will be written by the team from the ground in Howick. Pray with us until then.</p>
+          </div>
+          </sc-if>
+        </div>
+      </section>
+
+      <!-- Give CTA band -->
+      <section style="position:relative;background:var(--ink-deep);color:#fff;padding:clamp(64px,9vw,128px) 0;overflow:hidden">
+        <div style="position:absolute;right:-60px;top:-60px;width:340px;height:340px;border:40px solid var(--brand);opacity:.12;border-radius:50%"></div>
+        <div style="position:relative;max-width:760px;margin:0 auto;padding:0 24px;text-align:center">
+          <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(36px,5.5vw,68px);margin:0">Send the team</h2>
+          <p style="font-family:var(--font-body);font-size:18px;line-height:1.65;color:rgba(255,255,255,.82);margin:22px auto 0;max-width:48ch">Your giving covers travel, materials for the playground and mural, and everything the team carries into Howick.</p>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:34px">
+            <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:16px 36px;font-family:var(--font-heading);font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;text-decoration:none;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Give now</a>
+            <button onClick="{{ goGive }}" style="display:inline-flex;align-items:center;gap:8px;padding:16px 36px;font-family:var(--font-heading);font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid #fff;background:transparent;color:#fff;cursor:pointer;transition:all .2s" style-hover="background:#fff;color:var(--ink)">Other ways to help</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    </sc-if>
+
+    <!-- ===================== BLOG INDEX ===================== -->
+    <sc-if value="{{ isBlog }}" hint-placeholder-val="{{ true }}">
+    <div class="how-fade">
+      <section style="background:var(--paper-soft);border-bottom:1px solid var(--line);padding:clamp(48px,7vw,88px) 0">
+        <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+          <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin-bottom:14px">The story as it unfolds</div>
+          <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.95;letter-spacing:-.01em;font-size:clamp(44px,7vw,92px);margin:0;color:var(--ink)">Field journal</h1>
+          <p style="font-family:var(--font-body);font-size:18px;line-height:1.6;color:var(--gray-600);max-width:52ch;margin:20px 0 0">Updates from the team in {{ trip.location }}, the people, the partners, and the honest middle of it all.</p>
+        </div>
+      </section>
+      <section style="max-width:1152px;margin:0 auto;padding:clamp(40px,5vw,64px) 24px">
+        <sc-if value="{{ noPosts }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1px dashed var(--line-strong);padding:clamp(56px,9vw,110px) 24px;text-align:center;background:var(--paper);max-width:640px;margin:0 auto">
+          <div style="font-family:var(--font-display);font-size:clamp(26px,4vw,44px);font-weight:700;text-transform:uppercase;color:var(--ink);line-height:1">No entries yet</div>
+          <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--gray-600);margin:16px auto 0;max-width:46ch">This journal will fill with stories once the team is on the ground in Howick this July. Every word will be theirs. Until then, walk with us in prayer and giving.</p>
+          <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:26px;padding:13px 26px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;text-decoration:none">Support the team</a>
+        </div>
+        </sc-if>
+        <sc-if value="{{ hasPosts }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px">
+          <sc-for list="{{ blogChips }}" as="chip" hint-placeholder-count="3">
+            <button onClick="{{ chip.onClick }}" style="font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:9px 18px;cursor:pointer;border:1.5px solid {{ chip.border }};background:{{ chip.bg }};color:{{ chip.fg }};transition:all .15s">{{ chip.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px">
+          <sc-for list="{{ filteredPosts }}" as="post" hint-placeholder-count="6">
+            <div onClick="{{ post.onClick }}" data-reveal style="background:var(--paper);border:1px solid var(--line);cursor:pointer;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(25,24,23,.1)">
+              <div style="aspect-ratio:16/10;background:{{ post.tone }};position:relative">
+                <span style="position:absolute;top:14px;left:14px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(25,24,23,.4);padding:5px 10px;backdrop-filter:blur(4px)">{{ post.category }}</span>
+              </div>
+              <div style="padding:26px;display:flex;flex-direction:column;flex:1">
+                <div style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">{{ post.date }} · {{ post.readMins }} min</div>
+                <h3 style="font-family:var(--font-heading);font-size:22px;font-weight:700;color:var(--ink);margin:12px 0 10px;line-height:1.25">{{ post.title }}</h3>
+                <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:var(--gray-600);margin:0 0 20px">{{ post.excerpt }}</p>
+                <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-family:var(--font-body);font-size:13px;color:var(--gray-700)">By {{ post.author }}</span>
+                  <span style="font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--brand)">Read →</span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ===================== POST ===================== -->
+    <sc-if value="{{ isPost }}" hint-placeholder-val="{{ true }}">
+    <article class="how-fade">
+      <section style="position:relative;min-height:48vh;display:flex;align-items:flex-end;background:{{ activePost.tone }};overflow:hidden">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(25,24,23,.15),rgba(25,24,23,.78))"></div>
+        <div style="position:relative;max-width:820px;margin:0 auto;padding:0 24px 56px;width:100%">
+          <button onClick="{{ goBlog }}" style="font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:none;border:none;cursor:pointer;padding:0;margin-bottom:22px;opacity:.85">← Back to blog</button>
+          <div style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--brand);padding:6px 12px;display:inline-block;margin-bottom:18px">{{ activePost.category }}</div>
+          <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.98;letter-spacing:-.01em;font-size:clamp(34px,5.5vw,66px);color:#fff;margin:0">{{ activePost.title }}</h1>
+          <div style="font-family:var(--font-heading);font-size:13.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-top:20px">{{ activePost.author }} · {{ activePost.date }}</div>
+        </div>
+      </section>
+      <div style="max-width:720px;margin:0 auto;padding:clamp(40px,6vw,72px) 24px">
+        <p style="font-family:var(--font-body);font-size:21px;line-height:1.6;color:var(--ink);font-weight:600;margin:0 0 32px">{{ activePost.excerpt }}</p>
+        <sc-for list="{{ activePost.body }}" as="para" hint-placeholder-count="3">
+          <p style="font-family:var(--font-body);font-size:18px;line-height:1.8;color:var(--gray-700);margin:0 0 26px">{{ para }}</p>
+        </sc-for>
+        <div style="margin-top:48px;padding:32px;background:var(--paper-soft);border-left:4px solid var(--brand)">
+          <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:10px">Walk with us</div>
+          <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--gray-700);margin:0 0 18px">Your prayers and giving are part of this story. Thank you for sending us.</p>
+          <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;text-decoration:none;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Support the team</a>
+        </div>
+        <div style="margin-top:40px;border-top:1px solid var(--line);padding-top:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <button onClick="{{ goBlog }}" style="font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--brand);background:none;border:none;cursor:pointer;padding:0">← All entries</button>
+          <sc-if value="{{ hasNextPost }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ nextPost.onClick }}" style="font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:none;border:none;cursor:pointer;padding:0;text-align:right">Next: {{ nextPost.title }} →</button>
+          </sc-if>
+        </div>
+      </div>
+    </article>
+    </sc-if>
+
+    <!-- ===================== GALLERY ===================== -->
+    <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ true }}">
+    <div class="how-fade">
+      <section style="background:var(--paper-soft);border-bottom:1px solid var(--line);padding:clamp(48px,7vw,88px) 0">
+        <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+          <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin-bottom:14px">In pictures</div>
+          <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.95;letter-spacing:-.01em;font-size:clamp(44px,7vw,92px);margin:0;color:var(--ink)">Photo gallery</h1>
+          <p style="font-family:var(--font-body);font-size:18px;line-height:1.6;color:var(--gray-600);max-width:52ch;margin:20px 0 0">Moments from Howick: the playground, the mural, the sports camp, and the people we meet. Tap any photo to view it larger.</p>
+        </div>
+      </section>
+      <section style="max-width:1152px;margin:0 auto;padding:clamp(40px,5vw,64px) 24px">
+        <sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1px dashed var(--line-strong);padding:clamp(56px,9vw,110px) 24px;text-align:center;background:var(--paper);max-width:640px;margin:0 auto">
+          <div style="font-family:var(--font-display);font-size:clamp(26px,4vw,44px);font-weight:700;text-transform:uppercase;color:var(--ink);line-height:1">Photos coming soon</div>
+          <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--gray-600);margin:16px auto 0;max-width:46ch">The team will fill this gallery from Howick: the playground, the mural, the sports camp, and the faces of the people we meet.</p>
+        </div>
+        </sc-if>
+        <sc-if value="{{ hasPhotos }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px">
+          <sc-for list="{{ galleryChips }}" as="chip" hint-placeholder-count="3">
+            <button onClick="{{ chip.onClick }}" style="font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:9px 18px;cursor:pointer;border:1.5px solid {{ chip.border }};background:{{ chip.bg }};color:{{ chip.fg }};transition:all .15s">{{ chip.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+          <sc-for list="{{ filteredPhotos }}" as="photo" hint-placeholder-count="12">
+            <figure onClick="{{ photo.onClick }}" data-reveal style="margin:0;position:relative;aspect-ratio:1;background:{{ photo.tone }};cursor:pointer;overflow:hidden;display:flex;align-items:flex-end" style-hover="filter:brightness(1.06)">
+              <figcaption style="position:relative;width:100%;padding:14px;background:linear-gradient(0deg,rgba(25,24,23,.78),transparent);color:#fff">
+                <div style="font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:4px">{{ photo.category }}</div>
+                <div style="font-family:var(--font-body);font-size:13.5px;line-height:1.35">{{ photo.caption }}</div>
+              </figcaption>
+            </figure>
+          </sc-for>
+        </div>
+        </sc-if>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ===================== ABOUT / TEAM ===================== -->
+    <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
+    <div class="how-fade">
+      <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))">
+        <div style="display:flex;flex-direction:column;justify-content:center;padding:clamp(48px,6vw,96px);background:var(--ink-deep);color:#fff">
+          <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:16px">About the trip</div>
+          <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.95;letter-spacing:-.01em;font-size:clamp(40px,5.5vw,76px);margin:0">Who's going<br>& why</h1>
+          <p style="font-family:var(--font-body);font-size:18px;line-height:1.7;color:rgba(255,255,255,.85);margin:24px 0 0;max-width:46ch">Eight people from {{ trip.church }} are traveling to {{ trip.location }} from {{ trip.dates }}, partnering with the local church to build a playground, paint a mural, share the Gospel in Howick South and Shiyaz, host a retreat for young leaders, and run a sports camp for the kids. We're not going to fix anything. We're going to join in.</p>
+        </div>
+        <div style="position:relative;min-height:340px;background:var(--ink)">
+          <image-slot id="about-lead" shape="rect" fit="cover" placeholder="Drop a team or location photo" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+        </div>
+      </section>
+      <section style="max-width:1152px;margin:0 auto;padding:clamp(56px,7vw,96px) 24px">
+        <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(30px,4.5vw,52px);margin:0 0 16px;color:var(--ink)">The team</h2>
+        <div style="border-top:1px solid var(--line)">
+          <sc-for list="{{ teamRows }}" as="member" hint-placeholder-count="8">
+            <div data-reveal style="display:flex;gap:clamp(18px,3vw,32px);align-items:center;padding:24px 4px;border-bottom:1px solid var(--line)">
+              <image-slot id="{{ member.slotId }}" shape="circle" fit="cover" placeholder="Photo" style="width:clamp(72px,10vw,96px);aspect-ratio:1;flex:none"></image-slot>
+              <div style="flex:1;min-width:0">
+                <h3 style="font-family:var(--font-heading);font-size:clamp(18px,2.4vw,22px);font-weight:700;color:var(--ink);margin:0;line-height:1.2">{{ member.name }}</h3>
+                <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:{{ member.bioColor }};font-style:{{ member.bioStyle }};margin:8px 0 0;max-width:62ch">{{ member.bioText }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      <section style="background:var(--paper-soft);padding:clamp(56px,7vw,96px) 0">
+        <div style="max-width:900px;margin:0 auto;padding:0 24px;text-align:center">
+          <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin-bottom:14px">Our sending church</div>
+          <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1.05;letter-spacing:-.01em;font-size:clamp(28px,4vw,48px);margin:0;color:var(--ink)">Sent and supported by {{ trip.church }}</h2>
+          <p style="font-family:var(--font-body);font-size:17px;line-height:1.7;color:var(--gray-700);margin:22px auto 0;max-width:54ch">This team doesn't go alone. Behind the eight on the ground is a congregation praying, giving, and sending. If you'd like to be part of that, the best place to start is here.</p>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:30px">
+            <button onClick="{{ goGive }}" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Support the team</button>
+            <button onClick="{{ goBlog }}" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:transparent;color:var(--brand);cursor:pointer;transition:all .2s" style-hover="background:var(--brand);color:#fff">Read the blog</button>
+          </div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ===================== GIVE ===================== -->
+    <sc-if value="{{ isGive }}" hint-placeholder-val="{{ true }}">
+    <div class="how-fade">
+      <section style="background:var(--brand);color:#fff;padding:clamp(56px,8vw,104px) 0">
+        <div style="max-width:900px;margin:0 auto;padding:0 24px;text-align:center">
+          <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:16px">Partner with us</div>
+          <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.95;letter-spacing:-.01em;font-size:clamp(44px,7vw,92px);margin:0">Send the team.<br>Fund the work.</h1>
+          <p style="font-family:var(--font-body);font-size:18px;line-height:1.65;color:rgba(255,255,255,.9);margin:24px auto 0;max-width:50ch">Your gift covers travel, the playground and mural materials, and the sports camp. 100% goes to the trip.</p>
+          <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:32px;padding:17px 42px;font-family:var(--font-heading);font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid #fff;background:#fff;color:var(--brand);text-decoration:none;transition:all .2s" style-hover="background:transparent;color:#fff">Give online →</a>
+        </div>
+      </section>
+      <section style="max-width:1152px;margin:0 auto;padding:clamp(56px,7vw,96px) 24px">
+        <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(30px,4.5vw,52px);margin:0 0 12px;color:var(--ink);text-align:center">What your gift does</h2>
+        <p style="font-family:var(--font-body);font-size:17px;color:var(--gray-600);text-align:center;margin:0 auto 48px;max-width:46ch">Give any amount. Here's what a few levels make possible.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+          <sc-for list="{{ tiers }}" as="tier" hint-placeholder-count="3">
+            <div data-reveal style="border:1px solid var(--line);padding:36px 30px;text-align:center;background:var(--paper);transition:transform .2s,border-color .2s" style-hover="transform:translateY(-4px);border-color:var(--brand)">
+              <div style="font-family:var(--font-display);font-size:52px;font-weight:700;color:var(--brand);line-height:1">{{ tier.amount }}</div>
+              <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--gray-700);margin:18px 0 0">{{ tier.desc }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      <section style="background:var(--paper-soft);padding:clamp(56px,7vw,96px) 0">
+        <div style="max-width:1152px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px">
+          <div>
+            <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(28px,4vw,46px);margin:0 0 24px;color:var(--ink)">Other ways to help</h2>
+            <sc-for list="{{ helpWays }}" as="way" hint-placeholder-count="3">
+              <div style="display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)">
+                <div style="font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--brand-tint);line-height:1.1;min-width:36px">{{ way.num }}</div>
+                <div>
+                  <h3 style="font-family:var(--font-heading);font-size:18px;font-weight:700;color:var(--ink);margin:0 0 6px">{{ way.title }}</h3>
+                  <p style="font-family:var(--font-body);font-size:15px;line-height:1.6;color:var(--gray-600);margin:0">{{ way.desc }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:var(--ink-deep);color:#fff;padding:40px">
+            <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:18px">Pray with us</div>
+            <h3 style="font-family:var(--font-display);font-size:28px;font-weight:700;text-transform:uppercase;line-height:1.05;margin:0 0 22px">Six things to pray for</h3>
+            <sc-for list="{{ prayerPoints }}" as="point" hint-placeholder-count="6">
+              <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid rgba(255,255,255,.12)">
+                <span style="color:var(--brand-tint);font-size:18px;line-height:1.4">✦</span>
+                <span style="font-family:var(--font-body);font-size:15.5px;line-height:1.55;color:rgba(255,255,255,.9)">{{ point }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:var(--ink);color:var(--paper)">
+    <div style="max-width:1152px;margin:0 auto;padding:56px 24px;display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;justify-content:space-between">
+      <div style="max-width:34ch">
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:-.01em">{{ trip.title }}</div>
+        <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--line-strong);margin:10px 0 0">{{ trip.church }} · {{ trip.location }}<br>{{ trip.dates }}</p>
+      </div>
+      <nav style="display:flex;gap:32px;flex-wrap:wrap">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+          <span onClick="{{ item.onClick }}" style="font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:var(--paper);transition:color .15s" style-hover="color:var(--brand-tint)">{{ item.label }}</span>
+        </sc-for>
+        <a href="{{ donateUrl }}" target="_blank" rel="noopener" style="font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--brand-tint);text-decoration:none">Give</a>
+      </nav>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.1)">
+      <div style="max-width:1152px;margin:0 auto;padding:18px 24px;font-family:var(--font-body);font-size:12.5px;color:var(--mute)">Following the {{ trip.title }} mission team to South Africa.</div>
+    </div>
+  </footer>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeLightbox }}" class="how-fade" style="position:fixed;inset:0;z-index:100;background:rgba(15,14,13,.92);display:flex;align-items:center;justify-content:center;padding:24px">
+    <button onClick="{{ closeLightbox }}" style="position:absolute;top:24px;right:28px;background:none;border:none;color:#fff;font-size:34px;cursor:pointer;line-height:1;font-family:var(--font-body)">×</button>
+    <button onClick="{{ prevPhoto }}" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:#fff;font-size:28px;width:52px;height:52px;cursor:pointer;border-radius:50%" style-hover="background:var(--brand)">‹</button>
+    <button onClick="{{ nextPhoto }}" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:#fff;font-size:28px;width:52px;height:52px;cursor:pointer;border-radius:50%" style-hover="background:var(--brand)">›</button>
+    <div style="max-width:900px;width:100%">
+      <div style="aspect-ratio:3/2;background:{{ lightboxPhoto.tone }};display:flex;align-items:center;justify-content:center">
+        <span style="font-family:var(--font-display);font-size:20px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5)">Photo</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap">
+        <div>
+          <div style="font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-tint);margin-bottom:6px">{{ lightboxPhoto.category }}</div>
+          <div style="font-family:var(--font-body);font-size:17px;color:#fff">{{ lightboxPhoto.caption }}</div>
+        </div>
+        <div style="font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6)">{{ lightboxCounter }}</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===================== PAGE TRANSITION ===================== -->
+  <sc-if value="{{ transitioning }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:200;background:var(--ink-deep);display:flex;align-items:center;justify-content:center;pointer-events:none;animation:crossWipe .58s cubic-bezier(.76,0,.24,1) both">
+    <svg viewBox="0 0 200 200" width="160" height="160" style="overflow:visible">
+      <circle cx="100" cy="100" r="76" style="--len:478;fill:none;stroke:rgba(255,255,255,.28);stroke-width:1.5;stroke-dasharray:478;animation:toRing .58s ease both"></circle>
+      <g style="animation:toGlow .58s ease both">
+        <line x1="100" y1="38" x2="100" y2="168" style="stroke:var(--brand);stroke-width:15;filter:blur(8px)"></line>
+        <line x1="66" y1="84" x2="134" y2="84" style="stroke:var(--brand);stroke-width:15;filter:blur(8px)"></line>
+      </g>
+      <line x1="100" y1="38" x2="100" y2="168" style="--len:130;stroke:#fff;stroke-width:7;stroke-linecap:round;stroke-dasharray:130;animation:toDraw .58s ease both"></line>
+      <line x1="66" y1="84" x2="134" y2="84" style="--len:68;stroke:#fff;stroke-width:7;stroke-linecap:round;stroke-dasharray:68;animation:toDraw .58s ease both"></line>
+    </svg>
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;homeHero&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Editorial&quot;,&quot;Split&quot;,&quot;Journey&quot;],&quot;default&quot;:&quot;Editorial&quot;,&quot;tsType&quot;:&quot;'Editorial'|'Split'|'Journey'&quot;}}">
+class Component extends DCLogic {
+  state = { view: 'home', postId: null, blogFilter: 'All', galleryFilter: 'All', lightboxIndex: null, transitioning: false };
+
+  trip = {
+    church: 'Brave Church',
+    title: 'Howick 2026',
+    location: 'Howick, KwaZulu-Natal, South Africa',
+    dates: 'July 5\u201315, 2026',
+    tagline: 'Following the Howick 2026 mission team to South Africa: the people, the partners, and the story as it unfolds.',
+    donateUrl: 'https://brave.org/howick26'
+  };
+
+  tones = {
+    brand: 'linear-gradient(135deg,#aa1f23,#5e1416)',
+    ink: 'linear-gradient(135deg,#3a3433,#141312)',
+    gray: 'linear-gradient(135deg,#7c7775,#3a3735)'
+  };
+
+  focusAreas = [
+    { num: '01', title: 'Build a Playground', desc: 'Building a playground so the children of the community have a safe place to play, gather, and grow.' },
+    { num: '02', title: 'Paint a Mural', desc: 'Painting a mural that brings color, beauty, and a lasting mark of hope to the community.' },
+    { num: '03', title: 'Evangelism', desc: 'Sharing the Gospel in Howick South and Shiyaz, going to people where they are.' },
+    { num: '04', title: 'Youth Retreat', desc: 'Hosting a retreat to encourage and equip local young leaders in their faith.' },
+    { num: '05', title: 'Sports Camp', desc: 'Running a sports camp for the kids: playing hard, building friendships, pointing to Jesus.' }
+  ];
+
+  team = [
+    { slotId: 'team-jarred', name: 'Jarred Lewis', bio: '' },
+    { slotId: 'team-sky', name: 'Sky White', bio: '' },
+    { slotId: 'team-luke', name: 'Luke March', bio: '' },
+    { slotId: 'team-ana', name: 'Ana Levy', bio: '' },
+    { slotId: 'team-joe', name: 'Joe Levy', bio: '' },
+    { slotId: 'team-elizabeth', name: 'Elizabeth Betsch', bio: '' },
+    { slotId: 'team-vickie', name: 'Vickie Shaar', bio: '' },
+    { slotId: 'team-sam', name: 'Sam Thieman', bio: '' }
+  ];
+
+  posts = [];
+
+  photos = [];
+
+  tiers = [
+    { amount: '$50', desc: 'Supplies craft and sports-camp materials for the kids for a day.' },
+    { amount: '$150', desc: 'Covers paint and supplies for a section of the community mural.' },
+    { amount: '$500', desc: "Sponsors a full team member's travel for the trip." }
+  ];
+
+  helpWays = [
+    { num: '01', title: 'Pray', desc: 'Join the prayer team and lift the team up daily through the trip.' },
+    { num: '02', title: 'Share', desc: 'Send this site to friends and family who might want to follow along or give.' },
+    { num: '03', title: 'Send supplies', desc: 'Donate sports gear, craft materials, and paint before we depart.' }
+  ];
+
+  prayerPoints = [
+    'Safe travel and good health for all eight team members.',
+    'Unity, patience, and humility within the team.',
+    'Open hearts in Howick South and Shiyaz as we share the Gospel.',
+    'The children at the playground build and sports camp.',
+    'The young leaders at the youth retreat.',
+    'Energy, joy, and dependence on God for each full day.'
+  ];
+
+  // ---- nav ----
+  _navTo(patch) {
+    if (this._t1) clearTimeout(this._t1);
+    if (this._t2) clearTimeout(this._t2);
+    this.setState({ transitioning: true });
+    this._t1 = setTimeout(() => { this.setState(Object.assign({ lightboxIndex: null }, patch)); this.toTop(); }, 240);
+    this._t2 = setTimeout(() => { this.setState({ transitioning: false }); }, 580);
+  }
+  go(view) { if (this.state.view === view) { this.toTop(); return; } this._navTo({ view }); }
+  goPost(id) { this._navTo({ view: 'post', postId: id }); }
+  toTop() { try { window.scrollTo(0, 0); } catch (e) {} }
+  componentDidMount() {
+    this._onScroll = () => { this.updateJourney(); };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll, { passive: true });
+    this.updateJourney();
+    this._jt = [setTimeout(() => this.updateJourney(), 80), setTimeout(() => this.updateJourney(), 420)];
+  }
+  componentDidUpdate() { this.updateJourney(); }
+  componentWillUnmount() {
+    if (this._t1) clearTimeout(this._t1); if (this._t2) clearTimeout(this._t2);
+    if (this._onScroll) { window.removeEventListener('scroll', this._onScroll); window.removeEventListener('resize', this._onScroll); }
+    (this._jt || []).forEach(clearTimeout);
+  }
+
+  updateJourney() {
+    var q = function (s) { return document.querySelector(s); };
+    function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function ease(t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); }
+    function prog(sel) {
+      var s = q(sel); if (!s) return null;
+      var vh = window.innerHeight || 800;
+      var tot = s.offsetHeight - vh;
+      var top = s.getBoundingClientRect().top;
+      var p = tot > 0 ? (-top / tot) : 0;
+      return p < 0 ? 0 : (p > 1 ? 1 : p);
+    }
+    function band(P, a, b) { return ease(Math.min(clamp((P - a) / 0.12, 0, 1), clamp((b - P) / 0.12, 0, 1))); }
+    function setSc(P, name, a, b, opt) {
+      opt = opt || {};
+      var el = q('[data-scene="' + name + '"]'); if (!el) return 0;
+      var t = clamp((P - a) / (b - a), 0, 1), o, ty;
+      if (opt.first) { o = ease(clamp((1 - t) / 0.22, 0, 1)); ty = lerp(0, -50, t); }
+      else if (opt.last) { o = ease(clamp(t / 0.22, 0, 1)); ty = lerp(50, 0, o); }
+      else { o = ease(Math.min(clamp(t / 0.16, 0, 1), clamp((1 - t) / 0.16, 0, 1))); ty = lerp(50, -50, t); }
+      el.style.opacity = o;
+      el.style.transform = 'translateY(' + ty + 'px) scale(' + (opt.noscale ? 1 : lerp(0.97, 1.03, t)) + ')';
+      el.style.pointerEvents = o > 0.85 ? 'auto' : 'none';
+      return t;
+    }
+
+    // INTRO: title -> team photo reveal
+    var p = prog('[data-journey="intro"]');
+    if (p != null) {
+      setSc(p, 'title', 0, 0.5, { first: true });
+      var tp = setSc(p, 'teamphoto', 0.5, 1, { last: true, noscale: true });
+      var tpi = q('#jTeamImg'); if (tpi) tpi.style.transform = 'scale(' + lerp(1.14, 1, ease(tp)) + ')';
+      var tpc = q('#jTeamCap'); if (tpc) tpc.style.opacity = ease(clamp((tp - 0.2) / 0.5, 0, 1));
+      var hint = q('[data-scrollhint]'); if (hint) hint.style.opacity = (1 - ease(clamp(p / 0.04, 0, 1))) * 0.7;
+    }
+
+    // ISAIAH: 6:5 -> 6:8
+    var pi = prog('[data-journey="isaiah"]');
+    if (pi != null) {
+      var si = q('[data-journey="isaiah"] [data-scene="isaiah"]'); if (si) si.style.opacity = band(pi, 0, 1);
+      var isa5 = q('#jIsa5'); if (isa5) { isa5.style.opacity = ease(clamp(pi / 0.08, 0, 1)) * ease(clamp((0.6 - pi) / 0.22, 0, 1)); isa5.style.transform = 'translateY(' + lerp(0, -26, pi) + 'px)'; }
+      var isa8 = q('#jIsa8'); if (isa8) { var t8 = clamp((pi - 0.5) / 0.3, 0, 1); isa8.style.opacity = ease(t8); isa8.style.transform = 'translateY(' + lerp(34, 0, ease(t8)) + 'px)'; }
+    }
+
+    // COMMISSION: Matthew 28
+    var pc = prog('[data-journey="commission"]');
+    if (pc != null) {
+      var sm = q('[data-journey="commission"] [data-scene="matthew"]'); if (sm) sm.style.opacity = band(pc, 0, 1);
+      var mp = q('#jMattPromise'); if (mp) { var tmp = clamp((pc - 0.42) / 0.4, 0, 1); mp.style.opacity = ease(tmp); mp.style.transform = 'translateY(' + lerp(24, 0, ease(tmp)) + 'px)'; }
+    }
+
+    // GLOBE: Denver to Howick
+    var pg = prog('[data-journey="globe"]');
+    if (pg != null) {
+      var g = q('[data-scene="globe"]'); if (g) g.style.opacity = ease(clamp(pg / 0.12, 0, 1));
+      var gr = q('#jGlobeRot'); if (gr) gr.style.transform = 'rotate(' + lerp(-16, 16, pg) + 'deg)';
+      var arc = q('#jArc'); if (arc) { var La = Number(arc.getAttribute('data-len')) || 340; arc.style.strokeDashoffset = La * (1 - ease(clamp((pg - 0.12) / 0.66, 0, 1))); }
+      var dot = q('#jArcDot'); if (dot) { dot.style.offsetDistance = (clamp((pg - 0.12) / 0.66, 0, 1) * 100) + '%'; dot.style.opacity = (pg > 0.1 && pg < 0.92) ? 1 : 0; }
+      var miles = q('#jMiles'); if (miles) miles.textContent = Math.round(lerp(0, 9800, ease(clamp((pg - 0.08) / 0.7, 0, 1)))).toLocaleString();
+    }
+  }
+
+  blogCats = ['All'];
+  galleryCats = ['All'];
+
+  chip(label, active, onClick) {
+    return {
+      label, onClick,
+      bg: active ? 'var(--brand)' : 'transparent',
+      fg: active ? '#fff' : 'var(--gray-700)',
+      border: active ? 'var(--brand)' : 'var(--line-strong)'
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const hero = this.props.homeHero ?? 'Editorial';
+
+    const decoPost = (p) => ({ ...p, tone: this.tones[p.toneKey] || this.tones.ink, onClick: () => this.goPost(p.id) });
+    const allPosts = this.posts.map(decoPost);
+    const filteredPosts = s.blogFilter === 'All' ? allPosts : allPosts.filter(p => p.category === s.blogFilter);
+    const activePost = allPosts.find(p => p.id === s.postId) || allPosts[0] || {};
+    const activeIdx = allPosts.findIndex(p => p.id === (activePost && activePost.id));
+    const nextRaw = allPosts[activeIdx + 1] || null;
+
+    const decoPhoto = (p, i) => ({ ...p, tone: this.tones[p.toneKey] || this.tones.ink, onClick: () => this.setState({ lightboxIndex: i }) });
+    const filteredPhotos = (s.galleryFilter === 'All' ? this.photos : this.photos.filter(p => p.category === s.galleryFilter)).map(decoPhoto);
+
+    const lbOpen = s.lightboxIndex != null && s.lightboxIndex >= 0 && s.lightboxIndex < filteredPhotos.length;
+    const lbPhoto = lbOpen ? filteredPhotos[s.lightboxIndex] : { tone: this.tones.ink, caption: '', category: '' };
+
+    const navViews = (label, view, actives) => ({
+      label, onClick: () => this.go(view),
+      active: actives.indexOf(s.view) > -1,
+      color: actives.indexOf(s.view) > -1 ? 'var(--brand)' : 'var(--ink)'
+    });
+
+    return {
+      trip: this.trip,
+      donateUrl: this.trip.donateUrl,
+      focusAreas: this.focusAreas,
+      team: this.team,
+      teamRows: this.team.map(m => ({ slotId: m.slotId, name: m.name, bioText: m.bio || 'Bio coming soon.', bioColor: m.bio ? 'var(--gray-700)' : 'var(--mute)', bioStyle: m.bio ? 'normal' : 'italic' })),
+      tiers: this.tiers,
+      helpWays: this.helpWays,
+      prayerPoints: this.prayerPoints,
+
+      isHome: s.view === 'home',
+      isBlog: s.view === 'blog',
+      isPost: s.view === 'post',
+      isGallery: s.view === 'gallery',
+      isAbout: s.view === 'about',
+      isGive: s.view === 'give',
+      transitioning: s.transitioning,
+
+      isEditorial: hero === 'Editorial',
+      isSplit: hero === 'Split',
+      isJourney: hero === 'Journey',
+      countdown: this.daysToGo(),
+
+      navItems: [
+        navViews('Home', 'home', ['home']),
+        navViews('Blog', 'blog', ['blog', 'post']),
+        navViews('Photos', 'gallery', ['gallery']),
+        navViews('Team', 'about', ['about'])
+      ],
+      goHome: () => this.go('home'),
+      goBlog: () => this.go('blog'),
+      goGallery: () => this.go('gallery'),
+      goAbout: () => this.go('about'),
+      goGive: () => this.go('give'),
+
+      latestPosts: allPosts.slice(-3).reverse(),
+
+      hasPosts: allPosts.length > 0,
+      noPosts: allPosts.length === 0,
+      blogChips: this.blogCats.map(c => this.chip(c, s.blogFilter === c, () => this.setState({ blogFilter: c, lightboxIndex: null }))),
+      filteredPosts,
+
+      activePost,
+      hasNextPost: !!nextRaw,
+      nextPost: nextRaw ? { title: nextRaw.title, onClick: () => this.goPost(nextRaw.id) } : { title: '', onClick: () => {} },
+
+      hasPhotos: this.photos.length > 0,
+      noPhotos: this.photos.length === 0,
+      galleryChips: this.galleryCats.map(c => this.chip(c, s.galleryFilter === c, () => this.setState({ galleryFilter: c, lightboxIndex: null }))),
+      filteredPhotos,
+
+      lightboxOpen: lbOpen,
+      lightboxPhoto: lbPhoto,
+      lightboxCounter: lbOpen ? (s.lightboxIndex + 1) + ' / ' + filteredPhotos.length : '',
+      closeLightbox: () => this.setState({ lightboxIndex: null }),
+      nextPhoto: (e) => { if (e && e.stopPropagation) e.stopPropagation(); const n = filteredPhotos.length; if (!n) return; this.setState({ lightboxIndex: ((s.lightboxIndex + 1) % n) }); },
+      prevPhoto: (e) => { if (e && e.stopPropagation) e.stopPropagation(); const n = filteredPhotos.length; if (!n) return; this.setState({ lightboxIndex: ((s.lightboxIndex - 1 + n) % n) }); }
+    };
+  }
+
+  daysToGo() {
+    try {
+      const dep = new Date('2026-07-05T00:00:00');
+      const now = new Date();
+      const d = Math.max(0, Math.ceil((dep - now) / 86400000));
+      return d;
+    } catch (e) { return 19; }
+  }
+}
+</script>
+</body>
+</html>

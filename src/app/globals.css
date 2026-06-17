@@ -72,3 +72,122 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
+
+/* ==========================================================================
+ * Animations + interaction — ported verbatim from the Claude Design prototype
+ * (Howick Mission Blog.dc.html / Howick Admin.dc.html). The JS-driven scroll
+ * "journey" scenes are reproduced in useJourneyScroll(); everything here is the
+ * pure-CSS layer: keyframes, scroll-timeline reveals, pseudo-element hovers.
+ * ========================================================================== */
+
+::selection { background: var(--brand); color: #fff; }
+
+/* Entrance */
+@keyframes howRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes howFade { from { opacity: 0; } to { opacity: 1; } }
+.how-rise { animation: howRise .7s cubic-bezier(.2,.7,.2,1) both; }
+.how-fade { animation: howFade .5s ease both; }
+
+/* Scroll-timeline reveal for cards/sections */
+@keyframes revealUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+[data-reveal] { animation: revealUp both; animation-timeline: view(); animation-range: entry 0% cover 24%; }
+
+/* Top scroll-progress bar */
+@keyframes growX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+[data-progress] {
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+  background: var(--brand); transform-origin: 0 50%; transform: scaleX(0); z-index: 60;
+  animation: growX both; animation-timeline: scroll(root);
+}
+
+/* Nav underline */
+.navlink { position: relative; }
+.navlink::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 2px;
+  background: var(--brand); transform: scaleX(0); transform-origin: left;
+  transition: transform .28s cubic-bezier(.2,.7,.2,1);
+}
+.navlink:hover::after { transform: scaleX(1); }
+.navlink[data-active="true"]::after { transform: scaleX(1); }
+
+/* Mission emblem (animated globe + cross) */
+@keyframes emGeo { 0% { opacity: 0; } 6% { opacity: 1; } 45% { opacity: 1; } 54% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes emCross { 0% { opacity: 0; } 49% { opacity: 0; } 59% { opacity: 1; } 92% { opacity: 1; } 99% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes emFlow { to { stroke-dashoffset: -26; } }
+@keyframes emTravel { 0% { offset-distance: 0%; opacity: 0; } 10% { opacity: 1; } 38% { offset-distance: 100%; opacity: 1; } 44% { offset-distance: 100%; opacity: 0; } 100% { offset-distance: 100%; opacity: 0; } }
+@keyframes emDraw { 0% { stroke-dashoffset: var(--len); } 54% { stroke-dashoffset: var(--len); } 64% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+@keyframes emGlow { 0%, 55% { opacity: 0; } 68% { opacity: .95; } 80% { opacity: .5; } 92% { opacity: .7; } 99% { opacity: 0; } }
+
+/* Page-transition cross-wipe */
+@keyframes crossWipe { 0% { clip-path: inset(0 100% 0 0); } 44% { clip-path: inset(0 0 0 0); } 56% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 100%); } }
+@keyframes toDraw { 0%, 28% { stroke-dashoffset: var(--len); } 70% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+@keyframes toRing { 0% { stroke-dashoffset: var(--len); opacity: 0; } 25% { opacity: 1; } 65% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: .85; } }
+@keyframes toGlow { 0%, 38% { opacity: 0; } 72% { opacity: .9; } 100% { opacity: .6; } }
+.page-wipe { animation: crossWipe .58s cubic-bezier(.76,0,.24,1) both; }
+
+/* Brave letters cycling in the hero */
+@keyframes braveOn { 0% { color: rgba(255,255,255,.5); } 4% { color: var(--brand); } 16% { color: var(--brand); } 20% { color: rgba(255,255,255,.5); } 100% { color: rgba(255,255,255,.5); } }
+@keyframes bravePhrase { 0% { opacity: 0; transform: translateY(10px); } 4% { opacity: 1; transform: none; } 16% { opacity: 1; transform: none; } 20% { opacity: 0; transform: translateY(-10px); } 100% { opacity: 0; transform: translateY(10px); } }
+.bl { display: inline-flex; align-items: center; color: rgba(255,255,255,.5); animation: braveOn 10s infinite; }
+.bp { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; font-family: var(--font-heading); font-size: clamp(12px,1.6vw,16px); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #fff; animation: bravePhrase 10s infinite; }
+
+/* Decorative cross divider draw-on */
+@keyframes xdraw { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+.xcross-line { animation: xdraw both; animation-timeline: view(); animation-range: entry 0% cover 36%; }
+.xcross-line-h { animation: xdraw both; animation-timeline: view(); animation-range: entry 6% cover 40%; }
+
+/* Admin toast */
+@keyframes adToast { 0% { opacity: 0; transform: translateY(10px); } 12% { opacity: 1; transform: none; } 88% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(10px); } }
+.ad-toast { animation: adToast 2.4s ease both; }
+
+/* --- Hover helpers: base styles stay inline (faithful to prototype values),
+ * these classes only add the :hover state the prototype expressed via style-hover. */
+.btn-solid { transition: background .2s, border-color .2s; }
+.btn-solid:hover { background: var(--brand-shade); border-color: var(--brand-shade); }
+.btn-ghost-brand { transition: background .2s, color .2s; }
+.btn-ghost-brand:hover { background: var(--brand); color: #fff; }
+.btn-ghost-white { transition: background .2s, color .2s; }
+.btn-ghost-white:hover { background: #fff; color: var(--ink); }
+.lift { transition: transform .2s, box-shadow .2s; }
+.lift:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(25,24,23,.1); }
+.focus-card { transition: border-color .2s, transform .2s; }
+.focus-card:hover { border-color: var(--brand); transform: translateY(-4px); }
+.fig-bright { transition: filter .2s; }
+.fig-bright:hover { filter: brightness(1.06); }
+.lb-nav { transition: background .15s; }
+.lb-nav:hover { background: var(--brand); }
+
+/* Admin form primitives */
+.ad-in { width: 100%; font-family: var(--font-body); font-size: 15px; color: var(--ink); background: #fff; border: 1px solid var(--line-strong); padding: 11px 13px; outline: none; transition: border-color .15s; }
+.ad-in:focus { border-color: var(--brand); }
+.ad-lab { font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-600); margin-bottom: 7px; display: block; }
+.ad-navx { display: flex; align-items: center; gap: 12px; padding: 12px 16px; font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: .03em; cursor: pointer; border-radius: 6px; transition: background .15s, color .15s; }
+.ad-navx:hover { background: rgba(255,255,255,.06); color: #fff; }
+.ad-tb { display: flex; align-items: center; justify-content: center; width: 34px; height: 32px; border: 1px solid var(--line-strong); background: #fff; cursor: pointer; font-family: Georgia, serif; font-size: 15px; color: var(--ink); transition: all .12s; }
+.ad-tb:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* Rich-text body (contenteditable in admin, rendered HTML on the post page) */
+.rich [contenteditable]:focus, .rich:focus { outline: none; }
+.rich h2 { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 26px; margin: 24px 0 10px; color: var(--ink); }
+.rich blockquote { border-left: 4px solid var(--brand); margin: 18px 0; padding: 6px 0 6px 18px; color: var(--gray-700); font-size: 18px; }
+.rich img { max-width: 100%; height: auto; margin: 14px 0; display: block; }
+.rich p { margin: 0 0 14px; }
+.rich a { color: var(--brand); text-decoration: underline; }
+.rich[data-empty]:empty:before { content: attr(data-ph); color: var(--mute); }
+
+/* Focus-area grid: 5 across on desktop, gracefully fewer on smaller screens */
+.focus-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 900px) { .focus-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .focus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Respect reduced-motion: drop all the scene/entrance motion, keep content visible */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], .how-rise, .how-fade { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .emblem * { animation: none !important; }
+  .bl { animation: none !important; color: rgba(255,255,255,.8) !important; }
+  .bp { animation: none !important; }
+  .bp:first-child { opacity: 1 !important; }
+  .xcross-line, .xcross-line-h { animation: none !important; stroke-dashoffset: 0 !important; }
+  [data-progress] { display: none; }
+  .page-wipe { animation: none !important; }
+}

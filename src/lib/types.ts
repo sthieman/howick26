@@ -5,9 +5,10 @@ export type Post = {
   slug: string;
   title: string;
   excerpt: string | null;
-  body: string; // markdown
-  cover_image: string | null;
-  author_name: string; // display name the team member posts under
+  body: string; // rich HTML from the admin editor
+  cover_image: string | null; // public Storage URL
+  author_name: string; // team member selected as the author
+  category: string;
   published: boolean;
   published_at: string | null;
   created_at: string;
@@ -26,6 +27,16 @@ export type GalleryPhoto = {
   id: string;
   storage_path: string; // path within the `gallery` storage bucket
   caption: string | null;
+  category: string;
+  sort_order: number;
+  created_at: string;
+};
+
+export type TeamMember = {
+  id: string;
+  name: string;
+  bio: string;
+  photo: string | null; // public Storage URL
   sort_order: number;
   created_at: string;
 };

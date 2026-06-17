@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/mission-trip-blog-site-f5e646bc-2c0d-4188-8f16-f92f01b42112/tokens/brave-tokens.css">
+  <link rel="stylesheet" href="_ds/mission-trip-blog-site-f5e646bc-2c0d-4188-8f16-f92f01b42112/styles.css">
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    ::selection{background:var(--brand);color:#fff}
+    .ad-in{width:100%;font-family:var(--font-body);font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);padding:11px 13px;outline:none;transition:border-color .15s}
+    .ad-in:focus{border-color:var(--brand)}
+    .ad-lab{font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-600);margin-bottom:7px;display:block}
+    .ad-navx{display:flex;align-items:center;gap:12px;padding:12px 16px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.72);cursor:pointer;border-radius:6px;transition:background .15s,color .15s}
+    .ad-navx:hover{background:rgba(255,255,255,.06);color:#fff}
+    .ad-tb{display:flex;align-items:center;justify-content:center;width:34px;height:32px;border:1px solid var(--line-strong);background:#fff;cursor:pointer;font-family:Georgia,serif;font-size:15px;color:var(--ink);transition:all .12s}
+    .ad-tb:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+    [contenteditable]:focus{outline:none}
+    [contenteditable] h2{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:26px;margin:24px 0 10px;color:var(--ink)}
+    [contenteditable] blockquote{border-left:4px solid var(--brand);margin:18px 0;padding:6px 0 6px 18px;color:var(--gray-700);font-size:18px}
+    [contenteditable] img{max-width:100%;height:auto;margin:14px 0;display:block}
+    [contenteditable] p{margin:0 0 14px}
+    [contenteditable]:empty:before{content:attr(data-ph);color:var(--mute)}
+    @keyframes adToast{0%{opacity:0;transform:translateY(10px)}12%{opacity:1;transform:none}88%{opacity:1;transform:none}100%{opacity:0;transform:translateY(10px)}}
+  </style>
+</helmet>
+<div style="font-family:var(--font-body);color:var(--ink);background:var(--paper-soft);min-height:100vh">
+
+  <!-- ===================== LOGIN ===================== -->
+  <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 30%,#211e1d,#0c0b0a 75%)">
+    <div style="width:100%;max-width:420px">
+      <div style="display:flex;align-items:center;gap:10px;justify-content:center;color:var(--brand);margin-bottom:8px">
+        <svg viewBox="0 0 727 91" style="height:30px;width:auto"><g fill="currentColor"><path d="M51.02 54.22H108.47V67.25H51.02V54.22ZM51.02 23.59H108.47V36.62H51.02V23.59ZM0 0L14.03 14.66V90.84H133.41L145.45 78.26V58.15L145.49 58.13L133.3 45.4L145.46 32.69V12.71L133.29 0.02L133.31 0H0Z"></path><path transform="translate(146,0)" d="M51.03 23.59H108.48V45.42H51.03V23.59ZM0 0L14.03 14.66V90.84H51.03V48.97L101.87 90.84H146.07L118.21 67.87L145.47 45.41V12.7L133.31 0.02L133.33 0H0Z"></path><path transform="translate(293,0)" d="M49.89 58.14L63.53 23.59H80.56L94.2 58.17L49.89 58.15V58.14ZM19.69 0L31.13 11.95L0 90.84H36.99L49.23 59.82L86.9 90.84H144.08L108.24 0H19.69Z"></path><path transform="translate(438,0)" d="M90.71 0L102.3 12.11L80.55 67.25H63.52L36.99 0H0L35.83 90.84H108.23L144.07 0H90.71Z"></path><path transform="translate(581,0)" d="M0 0L14.03 14.66V90.84H145.46V54.22H108.47V67.25H51.02V54.22H97.33V36.62H51.02V23.59H108.47V36.62H145.46V0H0Z"></path></g></svg>
+      </div>
+      <div style="text-align:center;font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:30px">Howick 2026 · Team Admin</div>
+      <div style="background:#fff;padding:34px 30px;border-top:4px solid var(--brand)">
+        <h1 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:30px;letter-spacing:-.01em;margin:0 0 4px;color:var(--ink)">Sign in</h1>
+        <p style="font-family:var(--font-body);font-size:14px;color:var(--gray-600);margin:0 0 24px">Shared team login for the Howick 2026 blog.</p>
+        <label class="ad-lab">Email</label>
+        <input class="ad-in" type="email" value="{{ email }}" onInput="{{ setEmail }}" placeholder="team@brave.org" style="margin-bottom:16px">
+        <label class="ad-lab">Password</label>
+        <input class="ad-in" type="password" value="{{ password }}" onInput="{{ setPassword }}" placeholder="••••••••" style="margin-bottom:24px">
+        <button onClick="{{ login }}" style="width:100%;padding:14px;font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer;transition:background .2s" style-hover="background:var(--brand-shade);border-color:var(--brand-shade)">Sign in to the dashboard</button>
+        <div style="font-family:var(--font-body);font-size:12.5px;color:var(--mute);margin-top:16px;text-align:center">Prototype — any email and password will sign you in.</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===================== APP ===================== -->
+  <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;min-height:100vh">
+
+    <!-- Sidebar -->
+    <aside style="width:248px;flex:none;background:var(--ink-deep);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh">
+      <div style="padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:9px;color:var(--brand-tint)">
+        <svg viewBox="0 0 727 91" style="height:20px;width:auto"><g fill="currentColor"><path d="M51.02 54.22H108.47V67.25H51.02V54.22ZM51.02 23.59H108.47V36.62H51.02V23.59ZM0 0L14.03 14.66V90.84H133.41L145.45 78.26V58.15L145.49 58.13L133.3 45.4L145.46 32.69V12.71L133.29 0.02L133.31 0H0Z"></path><path transform="translate(146,0)" d="M51.03 23.59H108.48V45.42H51.03V23.59ZM0 0L14.03 14.66V90.84H51.03V48.97L101.87 90.84H146.07L118.21 67.87L145.47 45.41V12.7L133.31 0.02L133.33 0H0Z"></path><path transform="translate(293,0)" d="M49.89 58.14L63.53 23.59H80.56L94.2 58.17L49.89 58.15V58.14ZM19.69 0L31.13 11.95L0 90.84H36.99L49.23 59.82L86.9 90.84H144.08L108.24 0H19.69Z"></path><path transform="translate(438,0)" d="M90.71 0L102.3 12.11L80.55 67.25H63.52L36.99 0H0L35.83 90.84H108.23L144.07 0H90.71Z"></path><path transform="translate(581,0)" d="M0 0L14.03 14.66V90.84H145.46V54.22H108.47V67.25H51.02V54.22H97.33V36.62H51.02V23.59H108.47V36.62H145.46V0H0Z"></path></g></svg>
+        <span style="font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45)">Admin</span>
+      </div>
+      <nav style="padding:14px 12px;display:flex;flex-direction:column;gap:4px;flex:1">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+          <div onClick="{{ n.onClick }}" class="ad-navx" style="background:{{ n.bg }};color:{{ n.fg }}">
+            <span style="width:18px;text-align:center;font-size:16px">{{ n.icon }}</span>{{ n.label }}
+          </div>
+        </sc-for>
+      </nav>
+      <div style="padding:16px;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:10px">
+        <a href="Howick Mission Blog.dc.html" target="_blank" style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none">↗ View live site</a>
+        <div onClick="{{ logout }}" style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer">Sign out</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main style="flex:1;min-width:0;display:flex;flex-direction:column">
+      <header style="background:#fff;border-bottom:1px solid var(--line);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:20">
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;color:var(--ink)">{{ pageTitle }}</div>
+        <div style="display:flex;gap:10px">
+          <sc-if value="{{ showNewPost }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ newPost }}" style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer">+ New post</button>
+          </sc-if>
+        </div>
+      </header>
+
+      <div style="padding:32px;flex:1">
+
+        <!-- DASHBOARD -->
+        <sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-bottom:28px">
+            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid var(--line);padding:22px">
+                <div style="font-family:var(--font-display);font-size:42px;font-weight:700;color:var(--brand);line-height:1">{{ s.value }}</div>
+                <div style="font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);margin-top:8px">{{ s.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#fff;border:1px solid var(--line);padding:26px;margin-bottom:24px">
+            <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);margin-bottom:16px">Quick actions</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button onClick="{{ newPost }}" style="padding:12px 22px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer">Write a post</button>
+              <button onClick="{{ goPhotos }}" style="padding:12px 22px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--brand);background:transparent;color:var(--brand);cursor:pointer" style-hover="background:var(--brand);color:#fff">Upload photos</button>
+              <button onClick="{{ goTeam }}" style="padding:12px 22px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--line-strong);background:#fff;color:var(--ink);cursor:pointer">Edit team</button>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--line);padding:26px">
+            <div style="font-family:var(--font-heading);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);margin-bottom:6px">Trip countdown</div>
+            <div style="font-family:var(--font-body);font-size:15px;color:var(--gray-700)">Departure: July 5, 2026 · <strong style="color:var(--brand)">{{ countdown }} days</strong> to go. Keep the blog warm with updates and prayer requests.</div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- POSTS TABLE -->
+        <sc-if value="{{ isPosts }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid var(--line)">
+          <table style="width:100%;border-collapse:collapse;font-family:var(--font-body)">
+            <thead>
+              <tr style="background:var(--paper-soft);text-align:left">
+                <th style="padding:14px 20px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)">Title</th>
+                <th style="padding:14px 16px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)">Author</th>
+                <th style="padding:14px 16px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)">Category</th>
+                <th style="padding:14px 16px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)">Status</th>
+                <th style="padding:14px 16px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)">Date</th>
+                <th style="padding:14px 20px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);text-align:right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ postRows }}" as="p" hint-placeholder-count="3">
+                <tr style="border-top:1px solid var(--line)">
+                  <td style="padding:16px 20px;font-family:var(--font-heading);font-size:15px;font-weight:700;color:var(--ink)">{{ p.title }}</td>
+                  <td style="padding:16px 16px;font-size:14px;color:var(--gray-700)">{{ p.author }}</td>
+                  <td style="padding:16px 16px"><span style="font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-700);background:var(--paper-soft);padding:4px 10px">{{ p.category }}</span></td>
+                  <td style="padding:16px 16px"><span style="font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:{{ p.statusFg }};background:{{ p.statusBg }};padding:4px 10px">{{ p.status }}</span></td>
+                  <td style="padding:16px 16px;font-size:13.5px;color:var(--gray-600)">{{ p.dateLabel }}</td>
+                  <td style="padding:16px 20px;text-align:right;white-space:nowrap">
+                    <button onClick="{{ p.onEdit }}" style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--brand);background:none;border:none;cursor:pointer;padding:4px 8px">Edit</button>
+                    <button onClick="{{ p.onDelete }}" style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);background:none;border:none;cursor:pointer;padding:4px 8px">Delete</button>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+          <sc-if value="{{ noPosts }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:48px 20px;text-align:center;font-family:var(--font-body);color:var(--gray-600)">No posts yet. Click <strong>New post</strong> to write the first entry.</div>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <!-- EDITOR -->
+        <sc-if value="{{ isEditor }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:880px">
+          <button onClick="{{ goPosts }}" style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-600);background:none;border:none;cursor:pointer;padding:0;margin-bottom:18px">← Back to posts</button>
+          <div style="background:#fff;border:1px solid var(--line);padding:30px">
+            <label class="ad-lab">Post title</label>
+            <input id="ed-title" class="ad-in" placeholder="Give this update a headline" style="font-family:var(--font-heading);font-size:22px;font-weight:700;padding:13px;margin-bottom:20px" value="{{ ed.title }}">
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px">
+              <div><label class="ad-lab">Author</label><select id="ed-author" class="ad-in"><sc-for list="{{ authorOptions }}" as="a" hint-placeholder-count="8"><option value="{{ a }}">{{ a }}</option></sc-for></select></div>
+              <div><label class="ad-lab">Category</label><select id="ed-cat" class="ad-in"><sc-for list="{{ categories }}" as="c" hint-placeholder-count="5"><option value="{{ c }}">{{ c }}</option></sc-for></select></div>
+              <div><label class="ad-lab">Date</label><input id="ed-date" class="ad-in" type="date" value="{{ ed.date }}"></div>
+              <div><label class="ad-lab">Status</label><select id="ed-status" class="ad-in"><option value="Draft">Draft</option><option value="Published">Published</option></select></div>
+            </div>
+            <label class="ad-lab">Excerpt</label>
+            <input id="ed-excerpt" class="ad-in" placeholder="One-line summary shown on the blog cards" style="margin-bottom:22px" value="{{ ed.excerpt }}">
+
+            <label class="ad-lab">Cover image</label>
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+              <div id="ed-cover-wrap" style="width:120px;height:74px;background:var(--paper-soft);border:1px dashed var(--line-strong);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none">
+                <img id="ed-cover-img" style="display:none;width:100%;height:100%;object-fit:cover">
+                <span id="ed-cover-ph" style="font-family:var(--font-heading);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)">No cover</span>
+              </div>
+              <label style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--brand);cursor:pointer;border:1.5px solid var(--brand);padding:9px 16px">Upload cover<input type="file" accept="image/*" onChange="{{ onCover }}" style="display:none"></label>
+            </div>
+
+            <label class="ad-lab">Body</label>
+            <div style="border:1px solid var(--line-strong)">
+              <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px;border-bottom:1px solid var(--line);background:var(--paper-soft)">
+                <select onChange="{{ onBlock }}" class="ad-in" style="width:auto;padding:6px 8px;font-size:13px" title="Text style">
+                  <option value="p">Paragraph</option>
+                  <option value="h2">Heading</option>
+                  <option value="blockquote">Quote</option>
+                </select>
+                <select onChange="{{ onFont }}" class="ad-in" style="width:auto;padding:6px 8px;font-size:13px" title="Font">
+                  <option value="Open Sans">Body font</option>
+                  <option value="Montserrat">Heading font</option>
+                  <option value="Oswald">Display font</option>
+                </select>
+                <span style="width:1px;height:22px;background:var(--line-strong);margin:0 2px"></span>
+                <button class="ad-tb" onMouseDown="{{ prevent }}" onClick="{{ cmdBold }}" style="font-weight:700">B</button>
+                <button class="ad-tb" onMouseDown="{{ prevent }}" onClick="{{ cmdItalic }}" style="font-style:italic">i</button>
+                <button class="ad-tb" onMouseDown="{{ prevent }}" onClick="{{ cmdUnderline }}" style="text-decoration:underline">U</button>
+                <button class="ad-tb" onMouseDown="{{ prevent }}" onClick="{{ cmdList }}" style="font-size:13px">• List</button>
+                <button class="ad-tb" onMouseDown="{{ prevent }}" onClick="{{ cmdLink }}" style="font-size:13px">🔗</button>
+                <label class="ad-tb" style="font-size:12px">🖼 Photo<input type="file" accept="image/*" onChange="{{ onInlineImg }}" style="display:none"></label>
+              </div>
+              <div id="ed-body" ref="{{ editorRef }}" contenteditable="true" data-ph="Write the story here. Use the toolbar to add headings, formatting, and inline photos." style="min-height:300px;padding:22px;font-family:var(--font-body);font-size:16px;line-height:1.7;color:var(--ink)"></div>
+            </div>
+
+            <div style="display:flex;gap:12px;margin-top:24px;justify-content:flex-end">
+              <button onClick="{{ saveDraft }}" style="padding:12px 24px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--line-strong);background:#fff;color:var(--ink);cursor:pointer">Save draft</button>
+              <button onClick="{{ publish }}" style="padding:12px 24px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer">Publish</button>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- PHOTOS TABLE -->
+        <sc-if value="{{ isPhotos }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="margin-bottom:18px">
+            <label style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer">+ Upload photos<input type="file" accept="image/*" multiple onChange="{{ onPhotoUpload }}" style="display:none"></label>
+          </div>
+          <div style="background:#fff;border:1px solid var(--line)">
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--paper-soft);text-align:left">
+                <th style="padding:14px 20px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);width:120px">Photo</th>
+                <th style="padding:14px 16px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)">Caption</th>
+                <th style="padding:14px 16px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);width:180px">Category</th>
+                <th style="padding:14px 20px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);text-align:right;width:90px">Actions</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ photoRows }}" as="ph" hint-placeholder-count="3">
+                  <tr style="border-top:1px solid var(--line)">
+                    <td style="padding:12px 20px"><div style="width:84px;height:56px;background:var(--paper-soft);overflow:hidden"><img src="{{ ph.src }}" style="width:100%;height:100%;object-fit:cover"></div></td>
+                    <td style="padding:12px 16px"><input class="ad-in" value="{{ ph.caption }}" onInput="{{ ph.onCaption }}" placeholder="Describe this photo"></td>
+                    <td style="padding:12px 16px"><select class="ad-in" value="{{ ph.category }}" onChange="{{ ph.onCategory }}"><sc-for list="{{ photoCats }}" as="c" hint-placeholder-count="6"><option value="{{ c }}">{{ c }}</option></sc-for></select></td>
+                    <td style="padding:12px 20px;text-align:right"><button onClick="{{ ph.onDelete }}" style="font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);background:none;border:none;cursor:pointer">Delete</button></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+            <sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:48px 20px;text-align:center;font-family:var(--font-body);color:var(--gray-600)">No photos yet. Click <strong>Upload photos</strong> to add some from Howick.</div>
+            </sc-if>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- TEAM TABLE -->
+        <sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid var(--line)">
+          <table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:var(--paper-soft);text-align:left">
+              <th style="padding:14px 20px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);width:90px">Photo</th>
+              <th style="padding:14px 16px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);width:200px">Name</th>
+              <th style="padding:14px 20px;font-family:var(--font-heading);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)">Bio</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ teamRows }}" as="m" hint-placeholder-count="8">
+                <tr style="border-top:1px solid var(--line);vertical-align:top">
+                  <td style="padding:14px 20px">
+                    <label style="cursor:pointer;display:block"><div style="width:56px;height:56px;border-radius:50%;background:var(--paper-soft);overflow:hidden;border:1px solid var(--line-strong)"><img src="{{ m.src }}" style="width:100%;height:100%;object-fit:cover"></div><input type="file" accept="image/*" onChange="{{ m.onPhoto }}" style="display:none"></label>
+                  </td>
+                  <td style="padding:14px 16px"><input class="ad-in" value="{{ m.name }}" onInput="{{ m.onName }}"></td>
+                  <td style="padding:14px 20px"><textarea class="ad-in" rows="2" onInput="{{ m.onBio }}" placeholder="Short bio for the team page" style="resize:vertical;font-family:var(--font-body)">{{ m.bio }}</textarea></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        </sc-if>
+
+      </div>
+    </main>
+  </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:100;background:var(--ink);color:#fff;padding:14px 26px;font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:.04em;animation:adToast 2.4s ease both;box-shadow:0 12px 30px rgba(0,0,0,.25)">{{ toast }}</div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1320,&quot;height&quot;:880}}">
+class Component extends DCLogic {
+  state = {
+    authed: false,
+    email: '', password: '',
+    tab: 'dashboard',
+    editKey: null,
+    editing: null,
+    toast: '',
+    posts: [
+      { id: 'p1', title: 'Two Weeks Out: Final Preparations', author: 'Jarred Lewis', category: 'Update', status: 'Published', date: '2026-06-21', excerpt: 'Where the team stands as we count down to departure.', body: '<p>Bags are nearly packed and the team is ready. Here is where things stand two weeks out.</p>' },
+      { id: 'p2', title: 'Touchdown in Durban', author: 'Joe Levy', category: 'Travel', status: 'Draft', date: '2026-07-06', excerpt: '', body: '<p>We landed at sunrise, bleary-eyed and grateful...</p>' }
+    ],
+    photos: [],
+    team: [
+      { id: 'team-jarred', name: 'Jarred Lewis', bio: '', photo: '' },
+      { id: 'team-sky', name: 'Sky White', bio: '', photo: '' },
+      { id: 'team-luke', name: 'Luke March', bio: '', photo: '' },
+      { id: 'team-ana', name: 'Ana Levy', bio: '', photo: '' },
+      { id: 'team-joe', name: 'Joe Levy', bio: '', photo: '' },
+      { id: 'team-elizabeth', name: 'Elizabeth Betsch', bio: '', photo: '' },
+      { id: 'team-vickie', name: 'Vickie Shaar', bio: '', photo: '' },
+      { id: 'team-sam', name: 'Sam Thieman', bio: '', photo: '' }
+    ]
+  };
+
+  categories = ['Update', 'Playground', 'Mural', 'Evangelism', 'Youth Retreat', 'Sports Camp', 'Travel', 'Reflection'];
+  photoCats = ['Travel', 'Playground', 'Mural', 'Evangelism', 'Youth Retreat', 'Sports Camp'];
+
+  toast(msg) {
+    this.setState({ toast: msg });
+    if (this._tt) clearTimeout(this._tt);
+    this._tt = setTimeout(() => this.setState({ toast: '' }), 2400);
+  }
+
+  go(tab) { this.setState({ tab }); }
+  newPost() {
+    this._cover = '';
+    this.setState({ tab: 'editor', editKey: 'new-' + Date.now(), editing: { id: '', title: '', author: this.state.team[0].name, category: 'Update', status: 'Draft', date: new Date().toISOString().slice(0, 10), excerpt: '', body: '' } });
+  }
+  editPost(id) {
+    const p = this.state.posts.find(x => x.id === id);
+    if (!p) return;
+    this._cover = p.cover || '';
+    this.setState({ tab: 'editor', editKey: 'edit-' + id, editing: Object.assign({}, p) });
+  }
+  deletePost(id) { this.setState({ posts: this.state.posts.filter(p => p.id !== id) }); this.toast('Post deleted'); }
+
+  componentDidUpdate() {
+    if (this.state.tab === 'editor' && this._editor && this._loadedFor !== this.state.editKey) {
+      this._editor.innerHTML = (this.state.editing && this.state.editing.body) || '';
+      this._loadedFor = this.state.editKey;
+      // set selects + cover that React doesn't control
+      var setVal = (id, v) => { var el = document.getElementById(id); if (el) el.value = v; };
+      var e = this.state.editing || {};
+      setVal('ed-author', e.author); setVal('ed-cat', e.category); setVal('ed-status', e.status);
+      this._applyCover(this._cover);
+    }
+    if (this.state.tab !== 'editor') this._loadedFor = null;
+  }
+  _applyCover(src) {
+    var img = document.getElementById('ed-cover-img'), ph = document.getElementById('ed-cover-ph');
+    if (!img || !ph) return;
+    if (src) { img.src = src; img.style.display = 'block'; ph.style.display = 'none'; }
+    else { img.style.display = 'none'; ph.style.display = 'block'; }
+  }
+
+  _collect() {
+    var v = (id) => { var el = document.getElementById(id); return el ? el.value : ''; };
+    return {
+      title: v('ed-title') || 'Untitled', author: v('ed-author'), category: v('ed-cat'),
+      date: v('ed-date'), excerpt: v('ed-excerpt'),
+      body: this._editor ? this._editor.innerHTML : '', cover: this._cover || ''
+    };
+  }
+  _save(status) {
+    var data = this._collect(); data.status = status;
+    var ed = this.state.editing || {};
+    var posts = this.state.posts.slice();
+    if (ed.id) {
+      posts = posts.map(p => p.id === ed.id ? Object.assign({}, p, data) : p);
+    } else {
+      data.id = 'p' + Date.now();
+      posts = [data].concat(posts);
+    }
+    this.setState({ posts, tab: 'posts', editing: null, editKey: null });
+    this.toast(status === 'Published' ? 'Post published' : 'Draft saved');
+  }
+  saveDraft() { this._save('Draft'); }
+  publish() { this._save('Published'); }
+
+  exec(cmd, val) { try { if (this._editor) this._editor.focus(); document.execCommand(cmd, false, val); } catch (e) {} }
+  onInlineImg(e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    var r = new FileReader(); var self = this;
+    r.onload = () => { self.exec('insertImage', r.result); }; r.readAsDataURL(f); e.target.value = '';
+  }
+  onCover(e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    var r = new FileReader(); var self = this;
+    r.onload = () => { self._cover = r.result; self._applyCover(r.result); }; r.readAsDataURL(f); e.target.value = '';
+  }
+
+  onPhotoUpload(e) {
+    var files = Array.prototype.slice.call(e.target.files || []); if (!files.length) return;
+    var self = this; var done = 0; var added = [];
+    files.forEach(function (f) {
+      var r = new FileReader();
+      r.onload = function () {
+        added.push({ id: 'ph' + Date.now() + Math.random().toString(36).slice(2, 6), src: r.result, caption: '', category: self.photoCats[0] });
+        done++;
+        if (done === files.length) { self.setState({ photos: self.state.photos.concat(added) }); self.toast(files.length + ' photo(s) added'); }
+      };
+      r.readAsDataURL(f);
+    });
+    e.target.value = '';
+  }
+  updatePhoto(id, field, val) { this.setState({ photos: this.state.photos.map(p => p.id === id ? Object.assign({}, p, { [field]: val }) : p) }); }
+  deletePhoto(id) { this.setState({ photos: this.state.photos.filter(p => p.id !== id) }); }
+
+  updateTeam(id, field, val) { this.setState({ team: this.state.team.map(m => m.id === id ? Object.assign({}, m, { [field]: val }) : m) }); }
+  onTeamPhoto(id, e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    var r = new FileReader(); var self = this;
+    r.onload = () => self.updateTeam(id, 'photo', r.result); r.readAsDataURL(f); e.target.value = '';
+  }
+
+  countdown() { try { return Math.max(0, Math.ceil((new Date('2026-07-05') - new Date()) / 86400000)); } catch (e) { return 18; } }
+
+  renderVals() {
+    const s = this.state;
+    const titles = { dashboard: 'Dashboard', posts: 'Blog Posts', editor: (s.editing && s.editing.id) ? 'Edit Post' : 'New Post', photos: 'Photos', team: 'Team' };
+    const navMk = (label, tab, icon) => ({ label, icon, onClick: () => this.go(tab), bg: s.tab === tab ? 'var(--brand)' : 'transparent', fg: s.tab === tab ? '#fff' : 'rgba(255,255,255,.72)' });
+    const pubCount = s.posts.filter(p => p.status === 'Published').length;
+    const fmtDate = (d) => { try { return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); } catch (e) { return d; } };
+
+    return {
+      loggedIn: s.authed, loggedOut: !s.authed,
+      email: s.email, password: s.password,
+      setEmail: (e) => this.setState({ email: e.target.value }),
+      setPassword: (e) => this.setState({ password: e.target.value }),
+      login: () => this.setState({ authed: true }),
+      logout: () => this.setState({ authed: false, tab: 'dashboard' }),
+
+      pageTitle: titles[s.tab] || 'Dashboard',
+      showNewPost: s.tab === 'posts',
+      navItems: [navMk('Dashboard', 'dashboard', '◧'), navMk('Blog Posts', 'posts', '✎'), navMk('Photos', 'photos', '▥'), navMk('Team', 'team', '☻')],
+
+      isDash: s.tab === 'dashboard', isPosts: s.tab === 'posts', isEditor: s.tab === 'editor', isPhotos: s.tab === 'photos', isTeam: s.tab === 'team',
+      goPosts: () => this.go('posts'), goPhotos: () => this.go('photos'), goTeam: () => this.go('team'),
+      newPost: () => this.newPost(),
+      countdown: this.countdown(),
+
+      stats: [
+        { value: s.posts.length, label: 'Total posts' },
+        { value: pubCount, label: 'Published' },
+        { value: s.photos.length, label: 'Photos' },
+        { value: this.countdown(), label: 'Days to trip' }
+      ],
+
+      postRows: s.posts.map(p => ({
+        title: p.title, author: p.author, category: p.category, status: p.status, dateLabel: fmtDate(p.date),
+        statusBg: p.status === 'Published' ? 'rgba(31,138,91,.12)' : 'var(--paper-soft)',
+        statusFg: p.status === 'Published' ? '#1f8a5b' : 'var(--gray-600)',
+        onEdit: () => this.editPost(p.id), onDelete: () => this.deletePost(p.id)
+      })),
+      noPosts: s.posts.length === 0,
+
+      ed: s.editing || { title: '', author: '', category: '', date: '', excerpt: '', body: '' },
+      editorRef: (n) => { this._editor = n; },
+      authorOptions: s.team.map(m => m.name),
+      categories: this.categories,
+      prevent: (e) => { e.preventDefault(); },
+      cmdBold: () => this.exec('bold'), cmdItalic: () => this.exec('italic'), cmdUnderline: () => this.exec('underline'),
+      cmdList: () => this.exec('insertUnorderedList'),
+      cmdLink: () => { var u = window.prompt('Link URL'); if (u) this.exec('createLink', u); },
+      onBlock: (e) => { this.exec('formatBlock', e.target.value); e.target.value = 'p'; },
+      onFont: (e) => { this.exec('fontName', e.target.value); e.target.value = 'Open Sans'; },
+      onInlineImg: (e) => this.onInlineImg(e),
+      onCover: (e) => this.onCover(e),
+      saveDraft: () => this.saveDraft(), publish: () => this.publish(),
+
+      photoRows: s.photos.map(p => ({
+        src: p.src, caption: p.caption, category: p.category,
+        onCaption: (e) => this.updatePhoto(p.id, 'caption', e.target.value),
+        onCategory: (e) => this.updatePhoto(p.id, 'category', e.target.value),
+        onDelete: () => this.deletePhoto(p.id)
+      })),
+      photoCats: this.photoCats,
+      noPhotos: s.photos.length === 0,
+
+      teamRows: s.team.map(m => ({
+        name: m.name, bio: m.bio, src: m.photo || '',
+        onName: (e) => this.updateTeam(m.id, 'name', e.target.value),
+        onBio: (e) => this.updateTeam(m.id, 'bio', e.target.value),
+        onPhoto: (e) => this.onTeamPhoto(m.id, e)
+      })),
+
+      showToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

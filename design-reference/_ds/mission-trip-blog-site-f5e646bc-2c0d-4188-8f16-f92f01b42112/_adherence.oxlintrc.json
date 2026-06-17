@@ -1,0 +1,118 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/general/Button/**",
+              "components/general/Gallery/**",
+              "components/general/SiteFooter/**",
+              "components/general/SiteHeader/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Oswald|Montserrat|Open Sans))/i]",
+        "message": "Font not provided by the design system. Available: Oswald, Montserrat, Open Sans."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|href|className|children|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: variant, href, className, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|outline)$/]",
+        "message": "<Button> variant must be one of 'primary' | 'outline'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Gallery'] > JSXAttribute > JSXIdentifier[name!=/^(?:photos|key|ref|className|style|children)$/]",
+        "message": "<Gallery> doesn't accept that prop. Declared props: photos."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Button": {
+        "replaces": []
+      },
+      "Gallery": {
+        "replaces": []
+      },
+      "SiteFooter": {
+        "replaces": []
+      },
+      "SiteHeader": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--brand",
+      "--brand-shade",
+      "--brand-tint",
+      "--font-body",
+      "--font-display",
+      "--font-heading",
+      "--gray-600",
+      "--gray-700",
+      "--ink",
+      "--ink-deep",
+      "--line",
+      "--line-strong",
+      "--mute",
+      "--paper",
+      "--paper-soft"
+    ],
+    "tokenKinds": {
+      "--brand": "color",
+      "--brand-shade": "color",
+      "--brand-tint": "color",
+      "--ink": "color",
+      "--ink-deep": "color",
+      "--paper": "color",
+      "--paper-soft": "color",
+      "--line": "color",
+      "--line-strong": "color",
+      "--mute": "color",
+      "--gray-700": "color",
+      "--gray-600": "color",
+      "--font-display": "font",
+      "--font-heading": "font",
+      "--font-body": "font"
+    },
+    "fontFamilies": [
+      "Montserrat",
+      "Open Sans",
+      "Oswald"
+    ]
+  }
+}
