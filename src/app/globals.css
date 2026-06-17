@@ -178,7 +178,72 @@ h1, h2, h3, h4, h5, h6 {
 /* Focus-area grid: 5 across on desktop, gracefully fewer on smaller screens */
 .focus-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 @media (max-width: 900px) { .focus-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .focus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .focus-grid { grid-template-columns: 1fr; }
+  /* one per line on phones — let cards size to content instead of the tall desktop min-height */
+  .focus-grid .focus-card { min-height: auto !important; }
+}
+
+/* ==========================================================================
+ * Responsive / mobile. The desktop layout is ported faithfully from the
+ * prototype (built at 1280px); these rules adapt it down to phones.
+ * ========================================================================== */
+@media (max-width: 768px) { html { overflow-x: clip; } }
+
+/* Header: inline nav on desktop, hamburger + dropdown on mobile */
+.nav-desktop { display: flex; }
+.nav-mobile-toggle { display: none; }
+@media (max-width: 720px) {
+  .nav-desktop { display: none; }
+  .nav-mobile-toggle { display: inline-flex; }
+}
+@media (min-width: 721px) { .nav-mobile-panel { display: none !important; } }
+
+/* Home "Meet the team" circles: 4 across, 2 on phones */
+.team-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 560px) { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Admin dashboard stat cards + editor field row stack on small screens */
+.stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.editor-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 680px) {
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .editor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Wide admin tables scroll horizontally instead of breaking the layout */
+.table-scroll { overflow-x: auto; }
+.table-scroll table { min-width: 640px; }
+
+/* Admin: fixed sidebar on desktop, off-canvas drawer on mobile */
+.admin-shell { display: flex; }
+.admin-sidebar-desktop { display: flex; }
+.admin-mobilebar, .admin-drawer, .admin-drawer-overlay { display: none; }
+@media (max-width: 768px) {
+  .admin-shell { display: block; }
+  .admin-sidebar-desktop { display: none; }
+  .admin-mobilebar {
+    display: flex; align-items: center; gap: 12px;
+    position: sticky; top: 0; z-index: 30;
+    background: var(--ink-deep); color: #fff; padding: 12px 16px;
+  }
+  .admin-drawer-overlay {
+    display: block; position: fixed; inset: 0; background: rgba(0, 0, 0, .5);
+    z-index: 49; opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  .admin-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+  .admin-drawer {
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; height: 100dvh; width: 260px; max-width: 84vw;
+    background: var(--ink-deep); color: #fff; z-index: 50;
+    transform: translateX(-100%); transition: transform .25s ease;
+  }
+  .admin-drawer.open { transform: translateX(0); }
+  /* keep the per-page header from double-sticking under the mobile bar */
+  .admin-pageheader { position: static !important; padding: 14px 16px !important; }
+  /* tighter content padding on phones (direct content wrappers of admin main) */
+  .admin-main > div { padding: 16px !important; }
+}
 
 /* Respect reduced-motion: drop all the scene/entrance motion, keep content visible */
 @media (prefers-reduced-motion: reduce) {

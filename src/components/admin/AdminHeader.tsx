@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 export function AdminHeader({ title, actions }: { title: string; actions?: ReactNode }) {
   return (
     <header
+      className="admin-pageheader"
       style={{
         background: "#fff",
         borderBottom: "1px solid var(--line)",

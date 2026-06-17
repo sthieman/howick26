@@ -54,7 +54,7 @@ export function TeamManager({ team: initial }: { team: TeamMember[] }) {
 
   return (
     <div>
-      <div style={{ background: "#fff", border: "1px solid var(--line)" }}>
+      <div className="table-scroll" style={{ background: "#fff", border: "1px solid var(--line)" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ background: "var(--paper-soft)", textAlign: "left" }}>

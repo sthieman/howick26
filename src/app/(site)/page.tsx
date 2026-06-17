@@ -97,7 +97,7 @@ export default async function HomePage() {
       <section style={{ maxWidth: 1152, margin: "0 auto", padding: "clamp(64px,8vw,112px) 24px", textAlign: "center" }}>
         <div style={{ ...eyebrow, marginBottom: 12 }}>The eight</div>
         <h2 style={{ ...h2Display, margin: "0 0 40px" }}>Meet the team</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: "30px 20px", maxWidth: 740, margin: "0 auto" }}>
+        <div className="team-grid" style={{ display: "grid", gap: "30px 20px", maxWidth: 740, margin: "0 auto" }}>
           {team.map((m, i) => (
             <div key={i}>
               <div style={{ width: "clamp(78px,13vw,116px)", aspectRatio: "1", margin: "0 auto", borderRadius: "50%", overflow: "hidden", background: "var(--paper-soft)", border: "1px solid var(--line)" }}>
@@ -146,7 +146,7 @@ export default async function HomePage() {
           </div>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--gray-600)", maxWidth: "40ch", margin: 0 }}>Five ways we&rsquo;ll serve alongside the local church in Howick: building, creating, sharing the Gospel, and pouring into the next generation.</p>
         </div>
-        <div className="focus-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5,minmax(0,1fr))", gap: 16 }}>
+        <div className="focus-grid" style={{ display: "grid", gap: 16 }}>
           {focusAreas.map((area) => (
             <div key={area.num} data-reveal className="focus-card" style={{ border: "1px solid var(--line)", padding: "28px 20px", background: "var(--paper)", minHeight: 340, display: "flex", flexDirection: "column" }}>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 38, fontWeight: 700, color: "var(--brand-tint)", lineHeight: 1 }}>{area.num}</div>

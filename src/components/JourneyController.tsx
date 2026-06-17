@@ -58,7 +58,7 @@ export function JourneyController() {
         ty = lerp(50, -50, t);
       }
       el.style.opacity = String(o);
-      el.style.transform = "translateY(" + ty + "px) scale(" + (opt.noscale ? 1 : lerp(0.97, 1.03, t)) + ")";
+      el.style.transform = reduce ? "none" : "translateY(" + ty + "px) scale(" + (opt.noscale ? 1 : lerp(0.97, 1.03, t)) + ")";
       el.style.pointerEvents = o > 0.85 ? "auto" : "none";
       return t;
     }
@@ -70,7 +70,27 @@ export function JourneyController() {
         setSc(p, "title", 0, 0.5, { first: true });
         const tp = setSc(p, "teamphoto", 0.5, 1, { last: true, noscale: true });
         const tpi = q("#jTeamImg");
-        if (tpi) tpi.style.transform = "scale(" + lerp(1.14, 1, ease(tp)) + ")";
+        if (tpi) {
+          const narrow = window.innerWidth < 768;
+          if (narrow && reduce) {
+            // Reduced-motion phone: show the whole landscape photo statically,
+            // no crop, so the full team is visible without any motion.
+            tpi.style.objectFit = "contain";
+            tpi.style.objectPosition = "center";
+            tpi.style.transform = "none";
+          } else if (narrow) {
+            // Phone: keep it full-bleed but pan left→right across the whole photo
+            // as the scene reveals, so every face is shown over the scroll.
+            tpi.style.objectFit = "cover";
+            tpi.style.transform = "none";
+            tpi.style.objectPosition = (ease(tp) * 100).toFixed(1) + "% center";
+          } else {
+            // Desktop: original subtle zoom-out.
+            tpi.style.objectFit = "cover";
+            tpi.style.objectPosition = "center";
+            tpi.style.transform = reduce ? "none" : "scale(" + lerp(1.14, 1, ease(tp)) + ")";
+          }
+        }
         const tpc = q("#jTeamCap");
         if (tpc) tpc.style.opacity = String(ease(clamp((tp - 0.2) / 0.5, 0, 1)));
         const hint = q("[data-scrollhint]");
@@ -114,7 +134,7 @@ export function JourneyController() {
         const g = q('[data-scene="globe"]');
         if (g) g.style.opacity = String(ease(clamp(pg / 0.12, 0, 1)));
         const gr = q("#jGlobeRot");
-        if (gr) gr.style.transform = "rotate(" + lerp(-16, 16, pg) + "deg)";
+        if (gr) gr.style.transform = reduce ? "none" : "rotate(" + lerp(-16, 16, pg) + "deg)";
         const arc = q("#jArc") as unknown as SVGPathElement | null;
         if (arc) {
           const La = Number(arc.getAttribute("data-len")) || 340;
@@ -130,14 +150,10 @@ export function JourneyController() {
       }
     }
 
-    // Reduced motion: snap scenes to a sensible static state and skip listeners.
-    if (reduce) {
-      const intro = q('[data-scene="title"]');
-      if (intro) intro.style.opacity = "1";
-      update();
-      return;
-    }
-
+    // Note: under prefers-reduced-motion we still run the controller (scrolling
+    // reveals each scene — it's user-driven, not auto-playing), but skip the
+    // parallax translate/scale/rotate above so content appears without motion.
+    // The decorative auto-loops (emblem, letters) are disabled separately in CSS.
     let raf = 0;
     const onScroll = () => {
       if (raf) return;
