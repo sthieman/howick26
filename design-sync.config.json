@@ -1,0 +1,26 @@
+{
+  "pkg": "howick26",
+  "globalName": "Howick",
+  "srcDir": "src",
+  "tsconfig": ".design-sync-src/tsconfig.json",
+  "cssEntry": ".design-sync/compiled.css",
+  "componentSrcMap": {
+    "Button": "src/components/Button.tsx",
+    "Gallery": "src/components/Gallery.tsx",
+    "SiteHeader": "src/components/SiteHeader.tsx",
+    "SiteFooter": "src/components/SiteFooter.tsx",
+    "LikeButton": null,
+    "CommentsSection": null
+  },
+  "dtsPropsFor": {
+    "Button": "variant?: 'primary' | 'outline'; href?: string; className?: string; children: React.ReactNode",
+    "Gallery": "photos: { id: string; url: string; caption: string | null }[]",
+    "SiteHeader": "",
+    "SiteFooter": ""
+  },
+  "previewArgs": {
+    "Button": { "variant": "primary", "children": "Support the Team" },
+    "Gallery": { "photos": [] }
+  },
+  "notes": "Next.js app (not a component-library DS). Synced surface = brand tokens + 4 presentational components. `next/link` is shimmed via .design-sync-src/tsconfig.json paths so components bundle without the Next runtime. CSS is Tailwind v4 compiled to .design-sync/compiled.css (re-run: npx @tailwindcss/cli@4 -i src/app/globals.css -o .design-sync/compiled.css). Entry is the re-export at .design-sync-src/index.ts. LikeButton/CommentsSection excluded (Supabase-coupled, can't render in isolation). Gallery previewArgs uses empty photos to show the self-contained placeholder grid."
+}
